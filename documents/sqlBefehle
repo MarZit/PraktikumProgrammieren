@@ -1,0 +1,52 @@
+  `open` BOOLEAN,
+  `overrun` BOOLEAN,
+  `kilometer` INTEGER UNSIGNED,
+  PRIMARY KEY (`reservation_id`)
+);
+
+
+CREATE TABLE `database`.`item` (
+  `item_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `lent` BOOLEAN,
+  `out` BOOLEAN NOT NULL,
+  `entrydate` DATE,
+  `description` VARCHAR(240),
+  `item_picture` VARCHAR(120),
+  `type_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`item_id`)
+);
+
+
+
+CREATE TABLE `database`.`item_used` (
+  `item_id` INTEGER UNSIGNED NOT NULL,
+  `user_id` INTEGER UNSIGNED NOT NULL,
+  `type_id` INTEGER UNSIGNED NOT NULL,
+  `date` DATE NOT NULL,
+  PRIMARY KEY (`item_id`)
+);
+
+
+
+CREATE TABLE `database`.`item_type` (
+  `type_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type_name` VARCHAR(45) NOT NULL,
+  `type_kind` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`type_id`)
+);
+
+
+
+CREATE TABLE `database`.`item_type_role_relation` (
+  `type_id` INTEGER UNSIGNED NOT NULL,
+  `role_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`type_id`, `role_id`)
+);
+
+
+
+CREATE OR REPLACE VIEW `database`.`user_role`
+AS SELECT `role`.`role_name`, `user`.`username`
+FROM `fussballdb`.`role`, `fussballdb`.`user`
+WHERE `role`.`role_id` is `user`.`role_id`
