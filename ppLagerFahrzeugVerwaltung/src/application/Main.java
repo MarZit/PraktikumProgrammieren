@@ -6,6 +6,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import application.Specifications;
 
+/*
+ * @author Marcus Zitzelsberger 
+ */
+
 public class Main extends Application {
 	public static Specifications specs = null;	
 	
