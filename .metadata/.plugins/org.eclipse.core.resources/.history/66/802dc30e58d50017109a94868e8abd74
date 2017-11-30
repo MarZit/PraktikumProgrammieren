@@ -1,0 +1,41 @@
+package guiLager;
+
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+public class LoginWindow extends Stage {
+	
+	public LoginWindow() {
+		BorderPane loginPane = new BorderPane();
+		initTop();
+		loginPane.setCenter(initCenter());
+		initOwner(parentStage);
+		initModality(Modality.APPLICATION_MODAL); 
+		showAndWait();
+	}
+	
+	private void initTop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private Node initCenter() {
+		HBox usernameHBox = new HBox();
+		Label usernameLabel = new Label("Benutzername:");
+		TextField usernameTextField = new TextField("Benutzername");
+		usernameHBox.getChildren().addAll(usernameLabel, usernameTextField);
+		HBox passwordHBox = new HBox();
+		Label passwordLabel = new Label("Passwort:");
+		TextField passwordTextField = new TextField("Passwort");
+		passwordHBox.getChildren().addAll(passwordLabel, passwordTextField);
+		VBox centerVBox = new VBox();
+		centerVBox.getChildren().addAll(usernameHBox, passwordHBox);
+		return centerVBox;
+	}
+}

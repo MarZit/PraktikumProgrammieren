@@ -1,0 +1,8 @@
+package application;
+
+public class LanguageSelector {
+	
+	void selectLanguage(Language lan){
+		
+	}
+}
