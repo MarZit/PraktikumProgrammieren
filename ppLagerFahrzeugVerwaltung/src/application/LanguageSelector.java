@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 
 public class LanguageSelector {
 	
-	void selectLanguage(Language lan){
+	public void selectLanguage(Language lan){
 		Locale locale;
 		switch(lan) {
 		case EN: locale = Locale.ENGLISH; break;
