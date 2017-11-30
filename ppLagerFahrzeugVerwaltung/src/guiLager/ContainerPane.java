@@ -16,12 +16,17 @@ public class ContainerPane extends BorderPane {
 		initBottom();
 	}
 
-	private void initBottom() {
+	private void initTop() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	private void initRight() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void initBottom() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -32,11 +37,6 @@ public class ContainerPane extends BorderPane {
 	}
 
 	private void initCenter() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void initTop() {
 		// TODO Auto-generated method stub
 		
 	}

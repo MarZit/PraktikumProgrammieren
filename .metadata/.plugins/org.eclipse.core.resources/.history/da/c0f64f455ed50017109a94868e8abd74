@@ -1,0 +1,12 @@
+package application;
+
+import java.lang.annotation.Annotation;
+import java.util.Locale;
+
+import javax.annotation.Resource;
+import javax.annotation.Resources;
+import javax.security.auth.login.Configuration;
+
+public class LanguageSelector {
+	
+}

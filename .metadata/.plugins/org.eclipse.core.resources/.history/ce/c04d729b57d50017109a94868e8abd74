@@ -1,0 +1,33 @@
+package guiLager;
+
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
+public class LoginPane extends BorderPane {
+	
+	public LoginPane() {
+		initTop();
+		initCenter();
+	}
+
+	private void initTop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void initCenter() {
+		HBox usernameHBox = new HBox();
+		Label usernameLabel = new Label("Benutzername:");
+		TextField usernameTextField = new TextField("Benutzername");
+		usernameHBox.getChildren().addAll(usernameLabel, usernameTextField);
+		HBox passwordHBox = new HBox();
+		Label passwordLabel = new Label("Passwort:");
+		TextField passwordTextField = new TextField("Passwort");
+		passwordHBox.getChildren().addAll(passwordLabel, passwordTextField);
+		VBox centerVBox = new VBox();
+		centerVBox.getChildren().addAll(usernameHBox, passwordHBox);
+	}
+}

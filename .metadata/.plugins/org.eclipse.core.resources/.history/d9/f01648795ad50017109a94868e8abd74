@@ -1,0 +1,45 @@
+package guiLager;
+
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+public class LoginWindow extends Stage {
+	
+	public LoginWindow(Stage parentStage) {
+		BorderPane loginPane = new BorderPane();
+		initTop();
+		loginPane.setCenter(initCenter());
+		Scene loginScene = new Scene(loginPane);
+		setScene(loginScene);
+		initOwner(parentStage);
+		initModality(Modality.APPLICATION_MODAL);
+	}
+	
+	private void initTop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private Node initCenter() {
+		GridPane centerGridPane = new GridPane();
+		Label usernameLabel = new Label("Benutzername:");
+		TextField usernameTextField = new TextField("Benutzername");
+		centerGridPane.getChildren().addAll(usernameLabel, usernameTextField);
+		GridPane.setConstraints(usernameLabel, 0, 0);
+		GridPane.setConstraints(usernameTextField, 1, 0);
+		Label passwordLabel = new Label("Passwort:");
+		TextField passwordTextField = new TextField("Passwort");
+		centerGridPane.getChildren().addAll(passwordLabel, passwordTextField);
+		GridPane.setConstraints(passwordLabel, 0, 1);
+		GridPane.setConstraints(passwordTextField, 1, 1);
+		return centerGridPane;
+	}
+}

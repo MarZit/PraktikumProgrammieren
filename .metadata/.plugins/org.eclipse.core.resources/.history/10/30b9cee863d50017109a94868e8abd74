@@ -1,0 +1,16 @@
+package application;
+
+import java.util.Locale;
+
+public class LanguageSelector {
+	
+	void selectLanguage(Language lan){
+		Locale locale;
+		switch(lan) {
+		case EN: locale = new Locale("en", "US"); break;
+		case DE: locale = new Locale("de", "DE"); break;
+		default: locale = new Locale("en", "US"); break;
+		}
+		Specifications.getInstance().setLocale(locale);
+	}
+}

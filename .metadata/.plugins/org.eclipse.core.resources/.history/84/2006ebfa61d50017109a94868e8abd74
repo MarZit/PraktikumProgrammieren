@@ -1,0 +1,10 @@
+package application;
+
+import java.util.Locale;
+
+public class LanguageSelector {
+	
+	void selectLanguage(Language lan){
+		Specifications.getInstance().setLocale(new Locale(lan));
+	}
+}

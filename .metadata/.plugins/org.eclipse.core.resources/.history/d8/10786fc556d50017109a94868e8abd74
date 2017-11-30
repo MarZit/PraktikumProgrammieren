@@ -1,0 +1,21 @@
+package guiLager;
+
+import javafx.scene.layout.BorderPane;
+
+public class LoginPane extends BorderPane {
+	
+	public LoginPane() {
+		initTop();
+		initCenter();
+	}
+
+	private void initTop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void initCenter() {
+		// TODO Auto-generated method stub
+		
+	}
+}
