@@ -9,5 +9,14 @@
 <fullyQualifiedTypeName name="application.LanguageSelector"/>
 <fullyQualifiedTypeName name="java.util.ResourceBundle"/>
 <fullyQualifiedTypeName name="java.util.Locale"/>
+<fullyQualifiedTypeName name="javafx.scene.control.MenuBar"/>
+<fullyQualifiedTypeName name="javafx.scene.control.Menu"/>
+<fullyQualifiedTypeName name="javafx.beans.property.SimpleStringProperty"/>
+<fullyQualifiedTypeName name="java.awt.MenuItem"/>
+<fullyQualifiedTypeName name="javafx.scene.control.MenuItem"/>
 <fullyQualifiedTypeName name="application.Specifications"/>
+<fullyQualifiedTypeName name="javafx.scene.control.ToolBar"/>
+<fullyQualifiedTypeName name="application.Language"/>
+<fullyQualifiedTypeName name="javafx.geometry.Pos"/>
+<fullyQualifiedTypeName name="javafx.scene.layout.Priority"/>
 </qualifiedTypeNameHistroy>
