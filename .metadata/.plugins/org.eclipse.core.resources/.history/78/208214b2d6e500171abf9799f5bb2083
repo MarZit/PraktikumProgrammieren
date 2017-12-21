@@ -1,0 +1,12 @@
+package guiLager;
+
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+
+public class CalendarDay extends StackPane {
+	
+	public CalendarDay() {
+		Region background = new Region();
+		background.setId("backgroundRegion");
+	}
+}

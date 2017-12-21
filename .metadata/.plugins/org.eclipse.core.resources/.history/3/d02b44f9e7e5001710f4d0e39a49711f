@@ -1,0 +1,82 @@
+package guiLager;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import application.Specifications;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+
+public class CalendarPane extends GridPane {
+	
+	Calendar myTodayCalendar = Calendar.getInstance();
+	
+	public CalendarPane() {
+		setUpMonth();
+	}
+	
+	public void setUpMonth() {
+		setUpMonthUIHeadline();
+		try {
+			setUpMonthDays();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setUpMonthUIHeadline() {
+		String monthStr = myTodayCalendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Specifications.getInstance().getLocale());
+		Button monthBackButton = new Button("<");
+		Text monthText = new Text(monthStr);
+		Button monthForwardButton = new Button(">");
+		getChildren().addAll(monthBackButton, monthText, monthForwardButton);
+		GridPane.setConstraints(monthBackButton, 0, 0);
+		GridPane.setConstraints(monthText, 1, 0);
+		GridPane.setColumnSpan(monthText, 5);
+		GridPane.setConstraints(monthForwardButton, 6, 0);
+		Text sunText = new Text(Specifications.getInstance().getResources().getString("sun"));
+		Text monText = new Text(Specifications.getInstance().getResources().getString("mon"));
+		Text tueText = new Text(Specifications.getInstance().getResources().getString("tue"));
+		Text wedText = new Text(Specifications.getInstance().getResources().getString("wed"));
+		Text thuText = new Text(Specifications.getInstance().getResources().getString("thu"));
+		Text friText = new Text(Specifications.getInstance().getResources().getString("fri"));
+		Text satText = new Text(Specifications.getInstance().getResources().getString("sat"));
+		getChildren().addAll(sunText, monText, tueText, wedText, thuText, friText, satText);
+		GridPane.setConstraints(sunText, 0, 1);
+		GridPane.setConstraints(monText, 1, 1);
+		GridPane.setConstraints(tueText, 2, 1);
+		GridPane.setConstraints(wedText, 3, 1);
+		GridPane.setConstraints(thuText, 4, 1);
+		GridPane.setConstraints(friText, 5, 1);
+		GridPane.setConstraints(satText, 6, 1);
+	}
+	
+	private void setUpMonthDays() throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = formatter.parse(myTodayCalendar.get(Calendar.YEAR) + "-" 
+				+ myTodayCalendar.get(Calendar.MONTH) + "-" 
+				+ myTodayCalendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+		Date endDate = formatter.parse(myTodayCalendar.get(Calendar.YEAR) + "-" 
+				+ myTodayCalendar.get(Calendar.MONTH) + "-" 
+				+ myTodayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		
+		Calendar start = Calendar.getInstance();
+		start.setTime(startDate);
+
+		Calendar end = Calendar.getInstance();
+		end.setTime(endDate);
+		
+		int numberOfDays = myTodayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		int startDayOfWeek = start.get(Calendar.DAY_OF_WEEK);
+		for(int i = 0; i < numberOfDays; i++){
+			int dayOfWeek = (startDayOfWeek + i)%7;
+			System.out.println(i + "-" + dayOfWeek);
+		    CalendarDay cd = new CalendarDay(i);
+		    getChildren().add(cd);
+		    GridPane.setConstraints(cd, dayOfWeek, (dayOfWeek+i)/7 +2);
+		}
+	}
+}

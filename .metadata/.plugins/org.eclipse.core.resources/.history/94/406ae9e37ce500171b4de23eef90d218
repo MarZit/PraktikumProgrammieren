@@ -1,0 +1,11 @@
+package guiLager;
+
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+public class ReservationWindow extends Stage {
+	
+	public ReservationWindow() {
+		this.initModality(Modality.APPLICATION_MODAL);
+	}
+}

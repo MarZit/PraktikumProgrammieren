@@ -1,0 +1,42 @@
+package guiLager;
+
+import application.Specifications;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.text.Text;
+
+public class CenterGridPane extends GridPane {
+
+	public CenterGridPane() {
+		setUpHeadlines();
+	}
+	
+	private void setUpHeadlines() {
+		Text pictureText = new Text(Specifications.getInstance().getResources().getString("picture"));
+		Text descriptionText = new Text(Specifications.getInstance().getResources().getString("description"));
+		Text dateText = new Text(Specifications.getInstance().getResources().getString("date"));
+		Text actionText = new Text(Specifications.getInstance().getResources().getString("action"));
+		getChildren().addAll(pictureText, descriptionText, dateText, actionText);
+		setAlignment(Pos.CENTER);
+		ColumnConstraints column1 = new ColumnConstraints(100, 150, 300);
+	    column1.setHgrow(Priority.ALWAYS);
+	    column1.setHalignment(HPos.CENTER);
+	    ColumnConstraints column2 = new ColumnConstraints(100, 150, 300);
+	    column2.setHgrow(Priority.ALWAYS);
+	    column2.setHalignment(HPos.CENTER);
+		ColumnConstraints column3 = new ColumnConstraints(100, 150, 300);
+	    column3.setHgrow(Priority.ALWAYS);
+	    column3.setHalignment(HPos.CENTER);
+	    ColumnConstraints column4 = new ColumnConstraints(100, 150, 300);
+	    column4.setHgrow(Priority.ALWAYS);
+	    column4.setHalignment(HPos.CENTER);
+	    getColumnConstraints().addAll(column1, column2, column3, column4);
+		GridPane.setConstraints(pictureText, 0, 0);
+		GridPane.setConstraints(descriptionText, 1, 0);
+		GridPane.setConstraints(dateText, 2, 0);
+		GridPane.setConstraints(actionText, 3, 0);
+	}
+}
