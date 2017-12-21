@@ -5,11 +5,11 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the item_type database table.
+ * The persistent class for the Item_type database table.
  * 
  */
 @Entity
-@Table(name="item_type")
+@Table(name="Item_type")
 @NamedQuery(name="ItemType.findAll", query="SELECT i FROM ItemType i")
 public class ItemType implements Serializable {
 	private static final long serialVersionUID = 1L;

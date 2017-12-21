@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the item database table.
+ * The persistent class for the Item database table.
  * 
  */
 @Entity
@@ -74,8 +74,11 @@ public class Item implements Serializable {
 		return this.lent;
 	}
 
-	public void setLent(byte lent) {
-		this.lent = lent;
+	public void setLent(boolean b) {
+		if(b){
+			this.lent = 1;
+		}
+		else this.lent = 0;
 	}
 
 	public String getName() {
@@ -90,8 +93,11 @@ public class Item implements Serializable {
 		return this.out;
 	}
 
-	public void setOut(byte out) {
-		this.out = out;
+	public void setOut(boolean b) {
+		if(b){
+			this.out = 1;
+		}
+		else this.out = 0;
 	}
 
 	public int getTypeId() {
@@ -100,6 +106,20 @@ public class Item implements Serializable {
 
 	public void setTypeId(int typeId) {
 		this.typeId = typeId;
+	}
+	
+	public boolean isOut(){
+		if(out == 1){
+			return true;
+		}
+		else return false;
+	}
+	
+	public boolean isLent(){
+		if(lent == 1){
+			return true;
+		}
+		else return false;
 	}
 
 }
