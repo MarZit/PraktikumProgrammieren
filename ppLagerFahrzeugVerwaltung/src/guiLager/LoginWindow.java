@@ -17,7 +17,7 @@ public class LoginWindow extends Stage {
 		setTitle(Specifications.getInstance().getResources().getString("login"));
 		BorderPane loginPane = new BorderPane();
 		loginPane.setCenter(initCenter());
-		Scene loginScene = new Scene(loginPane);
+		Scene loginScene = new Scene(loginPane, 300, 100);
 		setScene(loginScene);
 		initOwner(parentStage);
 		initModality(Modality.APPLICATION_MODAL);

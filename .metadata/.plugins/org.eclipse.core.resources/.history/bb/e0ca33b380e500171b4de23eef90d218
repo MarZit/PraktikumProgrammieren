@@ -1,0 +1,53 @@
+package guiLager;
+
+import application.Specifications;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+public class ReservationWindow extends Stage {
+	
+	public ReservationWindow() {
+		setTitle(Specifications.getInstance().getResources().getString("reservation"));
+		initModality(Modality.APPLICATION_MODAL);
+		BorderPane reservationPane = new BorderPane();
+		reservationPane.setCenter(initCenter());
+		Scene reservationScene = new Scene(reservationPane, 300, 200);
+		setScene(reservationScene);
+	}
+	
+	private Node initCenter() {
+		GridPane centerGridPane = new GridPane();
+		ToggleGroup toggleGroup = new ToggleGroup();
+		RadioButton reserveRadioButton = new RadioButton(Specifications.getInstance().getResources().getString("reserve"));
+		RadioButton rentRadioButton = new RadioButton(Specifications.getInstance().getResources().getString("rent"));
+		toggleGroup.getToggles().addAll(reserveRadioButton, rentRadioButton);
+		Text beginDateText = new Text(Specifications.getInstance().getResources().getString("beginDate"));
+		Text endDateText = new Text(Specifications.getInstance().getResources().getString("endDate"));
+		DatePicker beginDateDatePicker = new DatePicker();
+		DatePicker endDateDatePicker = new DatePicker();
+		centerGridPane.getChildren().addAll(reserveRadioButton, rentRadioButton, beginDateText,
+				endDateText, beginDateDatePicker, endDateDatePicker);
+		GridPane.setConstraints(reserveRadioButton, 0, 0);
+		GridPane.setConstraints(beginDateText, 1, 0);
+		GridPane.setConstraints(beginDateDatePicker, 2, 0);
+		GridPane.setConstraints(endDateText, 1, 1);
+		GridPane.setConstraints(endDateDatePicker, 2, 1);
+		GridPane.setConstraints(rentRadioButton, 0, 2);
+		GridPane.setMargin(reserveRadioButton, new Insets(10.0));
+		GridPane.setMargin(beginDateText, new Insets(10.0));
+		GridPane.setMargin(beginDateDatePicker, new Insets(10.0));
+		GridPane.setMargin(endDateText, new Insets(10.0));
+		GridPane.setMargin(endDateDatePicker, new Insets(10.0));
+		GridPane.setMargin(rentRadioButton, new Insets(10.0));
+		return centerGridPane;
+	}
+}

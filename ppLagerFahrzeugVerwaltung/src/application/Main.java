@@ -5,6 +5,7 @@ import guiLager.LoginWindow;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Item;
 
 /*
  * @author Marcus Zitzelsberger 
@@ -17,7 +18,7 @@ public class Main extends Application {
 		try {
 			primaryStage.setTitle(Specifications.getInstance().getResources().getString("title"));
 			ContainerPane containerPane = new ContainerPane();
-			Scene scene = new Scene(containerPane, 800, 800);
+			Scene scene = new Scene(containerPane, 1200, 900);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();

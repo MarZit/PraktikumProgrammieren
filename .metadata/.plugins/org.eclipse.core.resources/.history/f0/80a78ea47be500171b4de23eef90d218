@@ -1,0 +1,14 @@
+package guiLager;
+
+import javafx.scene.control.Button;
+import model.Item;
+
+public class ReservationButton extends Button {
+
+	public ReservationButton(Item item) {
+		setOnAction(e -> {
+			//add Code to reserve
+			item.setLent((byte)1);
+		});
+	}
+}

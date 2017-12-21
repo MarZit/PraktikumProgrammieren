@@ -1,15 +1,27 @@
 package guiLager;
 
+import javax.swing.GroupLayout.Alignment;
+
 import application.Language;
 import application.Specifications;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import model.Item;
 
 /*
  * @author Marcus Zitzelsberger 
@@ -17,9 +29,13 @@ import javafx.scene.layout.Priority;
 
 public class ContainerPane extends BorderPane {
 	
+	CenterGridPane centerGridPane = null;
+	
 	public ContainerPane() {
 		initTop();
-		initCenter();
+		if(centerGridPane == null) {
+			initCenter();
+		}
 		initLeft();
 		initRight();
 		initBottom();
@@ -61,12 +77,29 @@ public class ContainerPane extends BorderPane {
 	}
 
 	private void initLeft() {
-		// TODO Auto-generated method stub
-		
+		VBox leftVBox = new VBox(10);
+		ComboBox<Item> superCategoriesComboBox = new ComboBox<>();
+		superCategoriesComboBox.setPrefWidth(100.0);
+//		superCategoriesComboBox.getItems().addAll(arg0) add Query here
+		ComboBox<Item> subCategoriesComboBox = new ComboBox<>();
+		subCategoriesComboBox.setPrefWidth(100.0);
+//		subCategoriesComboBox.getItems().addAll(arg0) add Query here
+		CalendarPane leftCalendarPane = new CalendarPane();
+		leftVBox.getChildren().addAll(superCategoriesComboBox, subCategoriesComboBox, leftCalendarPane);
+		setLeft(leftVBox);
 	}
 
 	private void initCenter() {
-		// TODO Auto-generated method stub
-		
+		ScrollPane centerScrollPane = new ScrollPane();
+		centerGridPane = new CenterGridPane();
+		centerScrollPane.setContent(centerGridPane);
+		setCenter(centerScrollPane);
+	}
+	
+	public CenterGridPane getCenterGridPane() {
+		if(centerGridPane == null) {
+			initCenter();
+		}
+		return centerGridPane;
 	}
 }
