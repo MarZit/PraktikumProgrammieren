@@ -1,0 +1,7 @@
+package guiLager;
+
+import javafx.scene.layout.GridPane;
+
+public class CenterGridPane extends GridPane {
+
+}

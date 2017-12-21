@@ -1,0 +1,28 @@
+package guiLager;
+
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import model.Item;
+
+public class CalendarDay extends StackPane {
+	
+	Item takenItem;
+	int dayOfMonth;
+	
+	public CalendarDay(int dayOfMonth) {
+		this.dayOfMonth = dayOfMonth;
+		setUpPane();
+	}
+	
+	private void setUpPane() {
+		Region background = new Region();
+		background.setId("backgroundRegion");
+		Text dayText = new Text(String.valueOf(dayOfMonth));
+		getChildren().addAll(background, dayText);
+	}
+	
+	public void addTakenItem(Item item) {
+		this.takenItem = item;
+	}
+}

@@ -1,26 +1,29 @@
 package application;
 	
+import guiLager.ContainerPane;
+import guiLager.LoginWindow;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import application.Specifications;
+import model.Item;
 
 /*
  * @author Marcus Zitzelsberger 
  */
 
 public class Main extends Application {
-	public static Specifications specs = null;	
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,400,400);
+			primaryStage.setTitle(Specifications.getInstance().getResources().getString("title"));
+			ContainerPane containerPane = new ContainerPane();
+			Scene scene = new Scene(containerPane, 1200, 900);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			LoginWindow loginWindow = new LoginWindow(primaryStage);
+			loginWindow.showAndWait();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
