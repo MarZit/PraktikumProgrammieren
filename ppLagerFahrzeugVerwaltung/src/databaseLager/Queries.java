@@ -48,9 +48,6 @@ public class Queries {
     public Queries (){
     	factory = Persistence.createEntityManagerFactory("Database");
     }
-	
-    
-    
     //Select Befehle
 	
     //Item Select

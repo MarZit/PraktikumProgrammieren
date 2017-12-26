@@ -1,0 +1,34 @@
+package controller;
+
+import databaseLager.Queries;
+import model.Item;
+
+public class StoreController {
+	
+//	private Item item;
+	private Queries queries;
+
+	
+	public StoreController() {
+//		this.item = item;
+	}
+
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+	
+	public void writeItemToDatabase(Item item) {
+		
+		queries.insertItem(item);
+	}
+	
+	public void removeItemFromDatabase(Item item) {
+		queries.deleteItem(item);
+	}
+
+	
+
+	
+	
+}
