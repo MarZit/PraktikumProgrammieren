@@ -1,0 +1,11 @@
+package application;
+
+public enum TypeKindEnum {
+	VEHICLE(1);
+	
+	int i;
+	
+	TypeKindEnum(int i){
+		this.i = i;
+	}
+}

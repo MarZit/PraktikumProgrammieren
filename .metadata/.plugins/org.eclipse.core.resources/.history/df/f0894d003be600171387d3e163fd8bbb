@@ -1,0 +1,40 @@
+package guiLager;
+
+import controller.StoreController;
+import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import model.Item;
+import model.ItemType;
+
+public class NewItemWindow extends Stage {
+	BorderPane newItemPane;
+	Item item = null;
+	StoreController storeController;
+	
+	public NewItemWindow(StoreController storeController) {
+		this.storeController = storeController;
+		item = new Item();
+		setUpCenter();
+		newItemPane = new BorderPane();
+		Scene newItemScene = new Scene(newItemPane, 300, 100);
+		setScene(newItemScene);
+		initModality(Modality.APPLICATION_MODAL);
+	}
+	
+	private void setUpCenter() {
+		TextField descriptionTF = new TextField();
+//		item.setEntrydate(); //Date
+		FileChooser fc = new FileChooser();
+		item.setItemPicture(fc.showOpenDialog(this).toString());
+		item.setLent((byte)0);
+		TextField nameTF = new TextField();
+		item.setOut((byte)0);
+		ComboBox<ItemType> typeBox = new ComboBox<>();
+		typeBox.getItems().addAll(storeController.getItemTypesFromDatabase());
+	}
+}

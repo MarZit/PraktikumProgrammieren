@@ -1,8 +1,10 @@
 package controller;
 
-import model.Item;
-import modelLager.Store;
+import java.util.ArrayList;
+
 import databaseLager.Queries;
+import model.Item;
+import model.ItemType;
 
 public class StoreController {
 	
@@ -10,22 +12,31 @@ public class StoreController {
 	private Queries queries;
 
 	
-	public StoreController(Item item) {
+	public StoreController() {
 //		this.item = item;
+		queries = new Queries();
 	}
 
 	public String toString() {
 		// TODO Auto-generated method stub
-		return Store.getInstance().getLagerList().toString();
+		return "";
 	}
 	
 	public void writeItemToDatabase(Item item) {
-		
 		queries.insertItem(item);
+	}
+	
+	public void writeItemTypeToDatabase(ItemType itemType) {
+		queries.insertItemType(itemType);
 	}
 	
 	public void removeItemFromDatabase(Item item) {
 		queries.deleteItem(item);
+	}
+	
+	public ArrayList<ItemType> getItemTypesFromDatabase(){
+//		queries.
+		return null;
 	}
 
 	
