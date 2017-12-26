@@ -1,0 +1,20 @@
+package guiLager;
+
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import model.Item;
+
+public class NewItemWindow extends BorderPane {
+
+	Item item = null;
+	
+	public NewItemWindow() {
+		item = new Item();
+		setUpCenter();
+	}
+	
+	private void setUpCenter() {
+		TextField descriptionTF = new TextField();
+		
+	}
+}
