@@ -37,8 +37,7 @@ public class ItemReservation implements Serializable {
 	@Column(name="user_id")
 	private int userId;
 
-	public ItemReservation() {
-	}
+	public ItemReservation() {}
 
 	public int getReservationId() {
 		return this.reservationId;

@@ -22,22 +22,21 @@ import javax.persistence.criteria.Root;
 
 import model.Item;
 import model.ItemReservation;
+import model.ItemReservation_;
 import model.ItemUsed;
+import model.ItemUsed_;
+import model.Item_;
 import model.ItemType;
 import model.ItemTypeRoleRelation;
 import model.ItemTypeRoleRelationPK;
 import model.ItemTypeRoleRelationPK_;
-import model.UserRole;
-import model.Role;
-import model.User;
-import model.Item_;
-import model.ItemReservation_;
-import model.ItemUsed_;
-import model.ItemType_;
 import model.ItemTypeRoleRelation_;
-import model.UserRole_;
-import model.Role_;
+import model.ItemType_;
 import model.User_;
+import model.Role;
+import model.Role_;
+import model.User;
+
 
 
 public class Queries {

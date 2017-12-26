@@ -1,5 +1,6 @@
 package application;
 	
+import databaseLager.DatabaseCreator;
 import guiLager.ContainerPane;
 import guiLager.LoginWindow;
 import javafx.application.Application;
@@ -30,6 +31,10 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
+		System.out.println("Erstelle Datenbank...");
+		DatabaseCreator db = new DatabaseCreator();
+		db.createSchema();
+		System.out.print("...fertig");
 		launch(args);
 	}
 }

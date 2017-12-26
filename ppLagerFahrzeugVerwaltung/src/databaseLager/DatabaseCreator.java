@@ -1,4 +1,4 @@
-package databaseLager;
+	package databaseLager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class DatabaseCreator
 {
 	 private Connection connection;
 	 private String     usr_name	= "root";
-	 private String     password	= "root";
+	 private String     password	= "m37P48z!";
 	 
 	 private Connection getConnection(String dbname)
 	 {
@@ -54,7 +54,7 @@ public class DatabaseCreator
 	 {
 		 try 
 		 {
-		 InputStream inSt = getClass().getResourceAsStream("database");
+		 InputStream inSt = getClass().getResourceAsStream("SQL-Befehl.sql");
 		 BufferedReader br = new BufferedReader(new InputStreamReader(inSt));
 		 String line, sql ="";
 		 while((line = br.readLine())!=null)
