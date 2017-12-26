@@ -1,0 +1,21 @@
+package application;
+
+import java.util.ArrayList;
+
+public enum TypeKindEnum {
+	VEHICLE(1), RENTABLE(2), USABLE(3);
+	
+	int i;
+	
+	TypeKindEnum(int i){
+		this.i = i;
+	}
+	
+	public ArrayList<TypeKindEnum> getAll(){
+		ArrayList<TypeKindEnum> all = new ArrayList<>();
+		all.add(VEHICLE);
+		all.add(RENTABLE);
+		all.add(USABLE);
+		return all;
+	}
+}
