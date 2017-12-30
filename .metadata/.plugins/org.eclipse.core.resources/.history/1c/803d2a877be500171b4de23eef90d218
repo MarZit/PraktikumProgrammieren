@@ -1,7 +1,0 @@
-package guiLager;
-
-import javafx.scene.control.Button;
-
-public class ReservationButton extends Button {
-
-}

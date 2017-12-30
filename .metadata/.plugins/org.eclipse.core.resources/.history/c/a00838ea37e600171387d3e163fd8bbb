@@ -1,7 +1,0 @@
-package guiLager;
-
-import javafx.scene.layout.BorderPane;
-
-public class NewItemWindow extends BorderPane {
-
-}

@@ -1,7 +1,0 @@
-package guiLager;
-
-import javafx.stage.Stage;
-
-public class ReservationWindow extends Stage {
-
-}

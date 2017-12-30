@@ -106,13 +106,13 @@ public class CalendarPane extends GridPane {
 		GregorianCalendar end = new GregorianCalendar();
 		end.setTime(endDate);
 		
-		System.out.println(myTodayCalendar.get(Calendar.YEAR) + "-" 
-				+ myTodayCalendar.get(Calendar.MONTH) + "-" 
-				+ myTodayCalendar.getActualMinimum(Calendar.DAY_OF_MONTH) + "   -   " +
-				myTodayCalendar.get(Calendar.YEAR) + "-" 
-				+ myTodayCalendar.get(Calendar.MONTH) + "-" 
-				+ myTodayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-		System.out.println(end.get(Calendar.MONTH) + " " + end.get(Calendar.DAY_OF_WEEK));
+//		System.out.println(myTodayCalendar.get(Calendar.YEAR) + "-" 
+//				+ myTodayCalendar.get(Calendar.MONTH) + "-" 
+//				+ myTodayCalendar.getActualMinimum(Calendar.DAY_OF_MONTH) + "   -   " +
+//				myTodayCalendar.get(Calendar.YEAR) + "-" 
+//				+ myTodayCalendar.get(Calendar.MONTH) + "-" 
+//				+ myTodayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+//		System.out.println(end.get(Calendar.MONTH) + " " + end.get(Calendar.DAY_OF_WEEK));
 		
 		int numberOfDays = myTodayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 		int startDayOfWeek = start.get(Calendar.DAY_OF_WEEK);

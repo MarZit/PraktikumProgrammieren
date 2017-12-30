@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 import databaseLager.Queries;
 import model.Item;
-import databaseLager.Queries;
+import model.ItemType;
+
 
 public class StoreController {
 	
@@ -14,7 +15,7 @@ public class StoreController {
 	
 	public StoreController() {
 //		this.item = item;
-		queries = new Queries();
+//		queries = new Queries();
 	}
 	
 	public void writeItemToDatabase(Item item) {

@@ -1,7 +1,7 @@
 ##### .gitignore FILE FOR THE PROJECT #####
 
 #ignore the meta-inf folder
-PraktikumProgrammieren/ppLagerFahrzeugVerwaltung/src/META-INF/
+META-INF/
 
 ##### .gitignore part for Java #####
 
