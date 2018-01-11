@@ -80,6 +80,12 @@ public class Item implements Serializable {
 		}
 		else this.lent = 0;
 	}
+	
+	public void setLent(byte b) {
+
+			this.lent = b;
+
+	}
 
 	public String getName() {
 		return this.name;
@@ -98,6 +104,11 @@ public class Item implements Serializable {
 			this.out = 1;
 		}
 		else this.out = 0;
+	}
+	
+	public void setOut(byte b) {
+
+			this.out = b;
 	}
 
 	public int getTypeId() {

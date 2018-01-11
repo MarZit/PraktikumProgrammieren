@@ -94,6 +94,7 @@ public class Queries {
 		Root<Item> item = cq.from(Item.class);
 		Root<ItemType> type = cq.from(ItemType.class);
 		Join<Item, ItemType> itemTypeJoin = item.join("typeId");
+		itemTypeJoin.on(cb.equal(type.get(ItemType_.typeKind), type_kind));
 		cq.orderBy(cb.asc(item.get(Item_.typeId)));
 		cq.select(item).where(cb.equal(type.get(ItemType_.typeKind), type_kind));
 		
