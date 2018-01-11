@@ -16,6 +16,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -93,8 +94,7 @@ public class Queries {
 		CriteriaQuery<Item> cq = cb.createQuery(Item.class);
 		Root<Item> item = cq.from(Item.class);
 		Root<ItemType> type = cq.from(ItemType.class);
-		Join<Item, ItemType> itemTypeJoin = item.join("typeId");
-		itemTypeJoin.on(cb.equal(type.get(ItemType_.typeKind), type_kind));
+		Join<Item, ItemType> itemTypeJoin = item.join("typeId", JoinType.INNER);
 		cq.orderBy(cb.asc(item.get(Item_.typeId)));
 		cq.select(item).where(cb.equal(type.get(ItemType_.typeKind), type_kind));
 		
