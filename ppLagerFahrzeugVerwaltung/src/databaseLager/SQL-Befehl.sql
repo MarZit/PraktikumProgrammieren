@@ -39,9 +39,9 @@ CREATE TABLE `mydb`.`Item_reservation` (
 
 CREATE TABLE `mydb`.`Item` (
   `item_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `itemName` VARCHAR(45) NOT NULL,
   `lent` TINYINT,
-  `out` TINYINT,
+  `isOut` TINYINT,
   `entrydate` DATE,
   `description` VARCHAR(240),
   `item_picture` VARCHAR(120),

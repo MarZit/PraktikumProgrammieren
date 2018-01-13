@@ -28,9 +28,9 @@ public class Item implements Serializable {
 
 	private byte lent;
 
-	private String name;
+	private String itemName;
 
-	private byte out;
+	private byte isOut;
 
 	@Column(name="type_id")
 	private int typeId;
@@ -88,27 +88,27 @@ public class Item implements Serializable {
 	}
 
 	public String getName() {
-		return this.name;
+		return this.itemName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String itemName) {
+		this.itemName = itemName;
 	}
 
 	public byte getOut() {
-		return this.out;
+		return this.isOut;
 	}
 
 	public void setOut(boolean b) {
 		if(b){
-			this.out = 1;
+			this.isOut = 1;
 		}
-		else this.out = 0;
+		else this.isOut = 0;
 	}
 	
 	public void setOut(byte b) {
 
-			this.out = b;
+			this.isOut = b;
 	}
 
 	public int getTypeId() {
@@ -120,7 +120,7 @@ public class Item implements Serializable {
 	}
 	
 	public boolean isOut(){
-		if(out == 1){
+		if(isOut == 1){
 			return true;
 		}
 		else return false;

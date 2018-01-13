@@ -12,6 +12,9 @@ import model.ItemUsed;
 import model.Role;
 import model.User;
 
+
+
+//Klasse dient zum einmaligen Testen aller Queries, Nachdem der Test ausgeführt wurde muss die Datenbank wieder neu gefüllt werden (DatabaseCreator)
 public class QueryTest {
 
 	public Queries q = new Queries();
@@ -32,29 +35,26 @@ public class QueryTest {
 		Item i = q.getItemByItemID(1);
 		System.out.println("GetItemByItemID: " + i.getName());
 		
-		//i.setName("Test");
-		//q.updateItem(i);
-		//System.out.println("ItemUpdated");
+		i.setName("Test");
+		q.updateItem(i);
+		System.out.println("ItemUpdated");
 		
-		
-		//Update Funktioniert nicht
-		//i = q.getItemByItemID(1);
-		//System.out.println("Wenn Name Test --> update erfolgreich " + i.getName());
+		i = q.getItemByItemID(1);
+		System.out.println("Wenn Name Test --> update erfolgreich " + i.getName());
 
 		List <Item> itemList = q.getItemsByItemName("VW Golf 7");
-		System.out.println("GetItemsByItemName: Anzahl der Items in der List" + itemList.size());
+		System.out.println("GetItemsByItemName: Anzahl der Items in der List " + itemList.size());
 		
 		
-		//Join Funktioniert nicht
 		itemList = q.getItemsByItemKind(1);
-		System.out.println("GetItemsByItemKind: Anzahl der Items in der List" + itemList.size());
+		System.out.println("GetItemsByItemKind: Anzahl der Items in der List " + itemList.size());
 		
 		itemList = q.getItemsByItemType(2);
-		System.out.println("GetItemsByItemType: Anzahl der Items in der List" + itemList.size());
+		System.out.println("GetItemsByItemType: Anzahl der Items in der List " + itemList.size());
 		
 		
-		//Insert funktioniert nicht
-		/*Item newItem = new Item();
+		
+		Item newItem = new Item();
 		newItem.setDescription("Beschreibung");
 		newItem.setName("ItemName");
 		newItem.setTypeId(1);
@@ -64,7 +64,7 @@ public class QueryTest {
 		newItem.setLent(false);
 		newItem.setItemPicture("picture");
 		q.insertItem(newItem);
-		System.out.println("ItemInserted");*/
+		System.out.println("ItemInserted");
 		
 		
 		q.deleteItem(i);
@@ -127,13 +127,13 @@ public class QueryTest {
 		System.out.println("getUserByUserID1: " + u.getFirstName());
 		
 		
-		//Update funktioniert nicht
-		/*u.setUsername("TestName");
+
+		u.setUsername("TestName");
 		
 		q.updateUser(u);
 		
 		u = q.getUserByUserName("TestName");
-		System.out.println("getUserByUserName: Wenn TestName --> Update erfolgreich: " + u.getFirstName());*/
+		System.out.println("getUserByUserName: Wenn TestName --> Update erfolgreich: " + u.getUsername());
 		
 		
 		u = new User();
@@ -241,7 +241,7 @@ public class QueryTest {
 		used.setItemId(1);
 		used.setTypeId(2);
 		used.setUserId(3);
-		used.setDate(new Date(2017, 12, 13));
+		used.setDate(new Date(117, 11, 13));
 		
 		q.useItem(used);
 		
@@ -249,7 +249,7 @@ public class QueryTest {
 		used = q.getItemUsedByItemId(1);
 		System.out.println("Wenn 13.12.2017: getItemUsedByItemId funktioniert + insert funktioniert: " + used.getDate());
 		
-		used.setDate(new Date(2017, 12, 14));
+		used.setDate(new Date(117, 11, 14));
 		q.updateItemUsed(used);
 		used = q.getItemUsedByItemId(1);
 		System.out.println("Wenn 14.12.2017: update funktioniert: " + used.getDate());
@@ -262,13 +262,13 @@ public class QueryTest {
 		usedList = q.getItemUsedByUserId(3);
 		System.out.println("Größe von getItemUsedByUserId muss 1 sein: " + usedList.size());
 		
-		/* DateQueries funktionnieren nicht
-		usedList = q.getItemUsedByDate(new Date(2017, 12, 14));
+		//DateQueries funktionieren nicht
+		usedList = q.getItemUsedByDate(new Date(117, 11, 14));
 		System.out.println("Größe von getItemUsedByDate muss 1 sein: " + usedList.size());
 		
-		usedList = q.getItemUsedBetweenDates(new Date(2017, 12, 10), new Date(2017, 12, 20));
+		usedList = q.getItemUsedBetweenDates(new Date(117, 11, 10), new Date(117, 11, 20));
 		System.out.println("Größe von getItemUsedBetweenDate muss 1 sein: " + usedList.size());
-		*/
+		
 		
 		q.deleteItemUsed(used);
 		
@@ -282,12 +282,11 @@ public class QueryTest {
 		
 		//ItemReservation Tests
 		
-		/* Date Funktioniert nicht
  		ItemReservation res = new ItemReservation();
 		res.setUserId(1);
 		res.setItemId(1);
-		res.setStartdate(new Date(2017, 12, 13));
-		res.setEnddate(new Date(2017, 12, 20));
+		res.setStartdate(new Date(117, 11, 13));
+		res.setEnddate(new Date(117, 11, 20));
 		res.setReservationId(1);
 		res.setOpen(true);
 		res.setOverrun(true);
@@ -303,21 +302,21 @@ public class QueryTest {
 		q.updateReservation(res);
 		res = q.getItemReservationByReservationID(1);
 		System.out.println("Wenn 2 update erfolgreich" + res.getItemId());
-		*/
+		
 		
 		List <ItemReservation> resList;
-		resList = q.getItemReservationsByItemID(1);
+		resList = q.getItemReservationsByItemID(2);
 		System.out.println("getItemReservationsByItemID(1), Größe muss 1 sein: " + resList.size());
 		
 		
 		resList = q.getItemReservationsByUserID(1);
 		System.out.println("getItemReservationsByUserID(1), Größe muss 1 sein: " + resList.size());
 		
-		/* Date Funktioniert nicht
-		resList = q.getItemReservationsBySingleDate(new Date(2017, 12, 17));
+
+		resList = q.getItemReservationsBySingleDate(new Date(117, 11, 17));
 		System.out.println("getItemReservationsBySingleDate(), Größe muss 1 sein: " + resList.size());
 		
-		resList = q.getItemReservationsBetweenDates(new Date(2017, 12, 12), new Date(2017, 12, 23));
+		resList = q.getItemReservationsBetweenDates(new Date(117, 11, 12), new Date(117, 11, 23));
 		System.out.println("getItemReservationsBetweenDates(), Größe muss 1 sein: " + resList.size());
 		
 		
@@ -329,7 +328,6 @@ public class QueryTest {
 			catch(Exception e){
 				System.out.println(e.getStackTrace() + " Wenn nullPointer --> Löschen erfolgreich");
 			}
-			*/
 		
 				
 	}
