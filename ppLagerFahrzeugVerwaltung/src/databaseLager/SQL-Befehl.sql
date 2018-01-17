@@ -39,9 +39,9 @@ CREATE TABLE `database`.`item_reservation` (
 
 CREATE TABLE `database`.`item` (
   `item_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `itemName` VARCHAR(45) NOT NULL,
   `lent` BOOLEAN,
-  `out` BOOLEAN NOT NULL,
+  `isOut` BOOLEAN NOT NULL,
   `entrydate` DATE,
   `description` VARCHAR(240),
   `item_picture` VARCHAR(120),
@@ -78,9 +78,9 @@ CREATE TABLE `database`.`item_type_role_relation` (
 
 
 
-CREATE VIEW `database`.`user_role`
-AS SELECT `r`.`role_name`, `u`.`username`
-FROM `database`.`role` as `r` join `database`.`user` as `u` on (`r`.`role_id` = `u`.`role`)
+-- CREATE VIEW `database`.`user_role`
+-- AS SELECT `r`.`role_name`, `u`.`username`
+-- FROM `database`.`role` as `r` join `database`.`user` as `u` on (`r`.`role_id` = `u`.`role`)
 
 
 

@@ -1,14 +1,14 @@
 package userdata;
 
 import javafx.beans.property.SimpleStringProperty;
-import model.UserRole;
+import model.Role;
 
 public class Userdata {
 
 	SimpleStringProperty username;
-	UserRole role;
+	Role role;
 	
-	public Userdata(String username, UserRole role) {
+	public Userdata(String username, Role role) {
 		this.username = new SimpleStringProperty(username);
 		this.role = role;
 	}
@@ -17,7 +17,7 @@ public class Userdata {
 		return username;
 	}
 
-	public UserRole getRole() {
+	public Role getRole() {
 		return role;
 	}
 }

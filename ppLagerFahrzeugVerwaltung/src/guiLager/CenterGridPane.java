@@ -1,5 +1,6 @@
 package guiLager;
 
+
 import application.Specifications;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;

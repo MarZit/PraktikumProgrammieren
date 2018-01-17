@@ -6,7 +6,6 @@ import guiLager.LoginWindow;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Item;
 
 /*
  * @author Marcus Zitzelsberger 
@@ -34,7 +33,7 @@ public class Main extends Application {
 		System.out.println("Erstelle Datenbank...");
 		DatabaseCreator db = new DatabaseCreator();
 		db.createSchema();
-		System.out.print("...fertig");
+		System.out.println("...fertig");
 		launch(args);
 	}
 }

@@ -15,7 +15,7 @@ public class StoreController {
 	
 	public StoreController() {
 //		this.item = item;
-//		queries = new Queries();
+		queries = new Queries();
 	}
 	
 	public void writeItemToDatabase(Item item) {
@@ -31,8 +31,7 @@ public class StoreController {
 	}
 	
 	public ArrayList<ItemType> getItemTypesFromDatabase(){
-//		queries.
-		return null;
+		return new ArrayList<ItemType>(queries.getItemTypes());
 	}
 
 	

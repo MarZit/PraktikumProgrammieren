@@ -16,27 +16,27 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import model.ItemTypeRoleRelationPK_;
+import model.Item_;
+import model.Role;
 import model.Item;
 import model.ItemReservation;
 import model.ItemReservation_;
-import model.ItemUsed;
-import model.ItemUsed_;
-import model.Item_;
 import model.ItemType;
 import model.ItemTypeRoleRelation;
 import model.ItemTypeRoleRelationPK;
-import model.ItemTypeRoleRelationPK_;
-import model.ItemTypeRoleRelation_;
+import model.ItemUsed_;
 import model.ItemType_;
-import model.User_;
-import model.Role;
+import model.ItemUsed;
+import model.ItemTypeRoleRelation_;
 import model.Role_;
 import model.User;
-
+import model.User_;
 
 
 public class Queries {
@@ -46,8 +46,11 @@ public class Queries {
     private EntityManagerFactory factory;
     
     public Queries (){
-    	factory = Persistence.createEntityManagerFactory("Database");
+    	factory = Persistence.createEntityManagerFactory("database");
     }
+	
+    
+    
     //Select Befehle
 	
     //Item Select
@@ -66,14 +69,14 @@ public class Queries {
 		return res;
 	    }
 	
-	public List<Item> getItemsByItemName(int item_name){
+	public List<Item> getItemsByItemName(String item_name){
 		
 		EntityManager m = factory.createEntityManager();
 		
 		CriteriaBuilder cb = m.getCriteriaBuilder();
 		CriteriaQuery<Item> cq = cb.createQuery(Item.class);
 		Root<Item> item = cq.from(Item.class);
-		cq.select(item).where(cb.equal(item.get(Item_.name), item_name));
+		cq.select(item).where(cb.equal(item.get(Item_.itemName), item_name));
 		
 		TypedQuery <Item> q = m.createQuery(cq);
 		List <Item> res = q.getResultList();
@@ -83,7 +86,7 @@ public class Queries {
 	
 	
 	//Join???
-	public List<Item> getItemByItemKind(int type_kind) {
+	public List<Item> getItemsByItemKind(int type_kind) {
 		
 		EntityManager m = factory.createEntityManager();
 		
@@ -91,7 +94,7 @@ public class Queries {
 		CriteriaQuery<Item> cq = cb.createQuery(Item.class);
 		Root<Item> item = cq.from(Item.class);
 		Root<ItemType> type = cq.from(ItemType.class);
-		Join<Item, ItemType> itemTypeJoin = item.join("typeId");
+		Join<Item, ItemType> itemTypeJoin = item.join("typeId", JoinType.INNER);
 		cq.orderBy(cb.asc(item.get(Item_.typeId)));
 		cq.select(item).where(cb.equal(type.get(ItemType_.typeKind), type_kind));
 		
@@ -116,7 +119,7 @@ public class Queries {
 		return res;
 	    }
 	
-	public List <Item> getItem() {
+	public List <Item> getItems() {
 		
 		EntityManager m = factory.createEntityManager();
 		
@@ -250,7 +253,7 @@ public class Queries {
 		return res;
 	    }
 	
-	public List <ItemReservation> getItemReservationByItemID(int item_id) {
+	public List <ItemReservation> getItemReservationsByItemID(int item_id) {
 		
 		EntityManager m = factory.createEntityManager();
 		
@@ -266,7 +269,7 @@ public class Queries {
 	    }
 	
 	
-	public List <ItemReservation> getItemReservationByUserID(int user_id) {
+	public List <ItemReservation> getItemReservationsByUserID(int user_id) {
 		
 		EntityManager m = factory.createEntityManager();
 		
@@ -283,7 +286,7 @@ public class Queries {
 	
 	
 	//Between statement???
-	public List <ItemReservation> getItemReservationBySingleDate(Date date) {
+	public List <ItemReservation> getItemReservationsBySingleDate(Date date) {
 		
 		EntityManager m = factory.createEntityManager();
 		
@@ -299,7 +302,7 @@ public class Queries {
 	
 	
 	//Between Statements???
-	public List <ItemReservation> getItemReservationBetweenDates(Date startdate, Date enddate) {
+	public List <ItemReservation> getItemReservationsBetweenDates(Date startdate, Date enddate) {
 		
 		EntityManager m = factory.createEntityManager();
 		
@@ -317,7 +320,7 @@ public class Queries {
 	    }
 	
 	
-	public List <ItemReservation> getOpenItemReservations(boolean open) {
+	public List <ItemReservation> getOpenItemReservations() {
 		
 		EntityManager m = factory.createEntityManager();
 		
@@ -325,7 +328,7 @@ public class Queries {
 		CriteriaQuery<ItemReservation> cq = cb.createQuery(ItemReservation.class);
 		Root<ItemReservation> reservation = cq.from(ItemReservation.class);
 		cq.orderBy(cb.asc(reservation.get(ItemReservation_.startdate)));
-		cq.select(reservation).where(cb.equal(reservation.get(ItemReservation_.open), open));	
+		cq.select(reservation).where(cb.equal(reservation.get(ItemReservation_.open), 1));	
 		
 		TypedQuery <ItemReservation> q = m.createQuery(cq);
 		List <ItemReservation> res = q.getResultList();
@@ -333,7 +336,7 @@ public class Queries {
 		return res;
 	    }
 	
-	public List <ItemReservation> getOverrunItemReservations(boolean overrun) {
+	public List <ItemReservation> getOverrunItemReservations() {
 		
 		EntityManager m = factory.createEntityManager();
 		
@@ -341,7 +344,7 @@ public class Queries {
 		CriteriaQuery<ItemReservation> cq = cb.createQuery(ItemReservation.class);
 		Root<ItemReservation> reservation = cq.from(ItemReservation.class);
 		cq.orderBy(cb.asc(reservation.get(ItemReservation_.startdate)));
-		cq.select(reservation).where(cb.equal(reservation.get(ItemReservation_.overrun), overrun));	
+		cq.select(reservation).where(cb.equal(reservation.get(ItemReservation_.overrun), 1));	
 		
 		TypedQuery <ItemReservation> q = m.createQuery(cq);
 		List <ItemReservation> res = q.getResultList();
@@ -349,6 +352,22 @@ public class Queries {
 		return res;
 	    }
 	
+	
+	public List <ItemReservation> getItemReservations() {
+		
+		EntityManager m = factory.createEntityManager();
+		
+		CriteriaBuilder cb = m.getCriteriaBuilder();
+		CriteriaQuery<ItemReservation> cq = cb.createQuery(ItemReservation.class);
+		Root<ItemReservation> resv = cq.from(ItemReservation.class);
+		cq.orderBy(cb.asc(resv.get(ItemReservation_.reservationId)));
+		cq.select(resv);	
+		
+		TypedQuery <ItemReservation> q = m.createQuery(cq);
+		List <ItemReservation> res = q.getResultList();
+		m.close();
+		return res;
+	    }
 	//ItemType Select
 	
 	public ItemType getItemTypeByTypeId(int type_id) {
@@ -381,6 +400,21 @@ public class Queries {
 		return res;
 	    }
 	
+	public List <ItemType> getItemTypes() {
+		
+		EntityManager m = factory.createEntityManager();
+		
+		CriteriaBuilder cb = m.getCriteriaBuilder();
+		CriteriaQuery<ItemType> cq = cb.createQuery(ItemType.class);
+		Root<ItemType> item = cq.from(ItemType.class);
+		cq.orderBy(cb.asc(item.get(ItemType_.typeName)));
+		cq.select(item);	
+		
+		TypedQuery <ItemType> q = m.createQuery(cq);
+		List <ItemType> res = q.getResultList();
+		m.close();
+		return res;
+	    }
 	
 	//ItemTypeRoleRelation Select
 	
@@ -524,6 +558,25 @@ public class Queries {
 	    }
 	
 	
+	public List <ItemUsed> getItemsUsed() {
+		
+		EntityManager m = factory.createEntityManager();
+		
+		CriteriaBuilder cb = m.getCriteriaBuilder();
+		CriteriaQuery<ItemUsed> cq = cb.createQuery(ItemUsed.class);
+		Root<ItemUsed> item = cq.from(ItemUsed.class);
+		cq.orderBy(cb.asc(item.get(ItemUsed_.date)));
+		cq.select(item);	
+		
+		TypedQuery <ItemUsed> q = m.createQuery(cq);
+		List <ItemUsed> res = q.getResultList();
+		m.close();
+		return res;
+	    }
+	
+	
+	
+	
 	//Update Befehle
 	
 	public void updateReservation(ItemReservation reservation) {
@@ -552,17 +605,23 @@ public class Queries {
 	}
 	
 	
-public void updateItem(Role role) {
+public void updateItem(Item item) {
 	    
     	EntityManager m = factory.createEntityManager();
 	
 	CriteriaBuilder cb = m.getCriteriaBuilder();
-	CriteriaUpdate<Role> cq = cb.createCriteriaUpdate(Role.class);
-	Root<Role> res = cq.from(Role.class);
-	cq.set(res.get(Role_.roleId), role.getRoleId());
-	cq.set(res.get(Role_.roleName), role.getRoleName());
+	CriteriaUpdate<Item> cq = cb.createCriteriaUpdate(Item.class);
+	Root<Item> res = cq.from(Item.class);
+	cq.set(res.get(Item_.itemId), item.getItemId());
+	cq.set(res.get(Item_.entrydate), item.getEntrydate());
+	cq.set(res.get(Item_.description), item.getDescription());
+	cq.set(res.get(Item_.itemPicture), item.getItemPicture());
+	cq.set(res.get(Item_.lent), item.getLent());
+	cq.set(res.get(Item_.itemName), item.getName());
+	cq.set(res.get(Item_.isOut), item.getIsOut());
+	cq.set(res.get(Item_.typeId), item.getTypeId());
 
-	cq.where(cb.equal(res.get(Role_.roleId), role.getRoleId()));
+	cq.where(cb.equal(res.get(Item_.itemId), item.getItemId()));
 	
 	m.getTransaction().begin();
 	Query q = m.createQuery(cq);
@@ -629,7 +688,7 @@ public void updateItemType(ItemType type) {
 	Root<ItemType> res = cq.from(ItemType.class);
 	cq.set(res.get(ItemType_.typeId), type.getTypeId());
 	cq.set(res.get(ItemType_.typeName), type.getTypeName());
-	cq.where(cb.equal(res.get(ItemType_.typeKind), type.getTypeKind()));
+	cq.where(cb.equal(res.get(ItemType_.typeId), type.getTypeId()));
 
 	m.getTransaction().begin();
 	Query q = m.createQuery(cq);
@@ -698,6 +757,8 @@ public void updateItemUsed(ItemUsed used) {
 
 	public void insertItem(Item item) {
 	
+	System.out.println(item.getName() + " " + item.getDescription() + " " + item.getItemPicture());
+		
 	EntityManager m = factory.createEntityManager();
 
 	m.getTransaction().begin();

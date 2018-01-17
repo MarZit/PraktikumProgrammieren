@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -44,16 +43,18 @@ public class NewItemWindow extends Stage {
 		item.setLent((byte)0);
 		TextField nameTF = new TextField();
 		nameTF.setPromptText(Specifications.getInstance().getResources().getString("name"));
-		item.setOut((byte)0);
+		item.setIsOut((byte)0);
 		ComboBox<ItemType> typeBox = new ComboBox<>();
 		typeBox.setPromptText(Specifications.getInstance().getResources().getString("itemType"));
 		typeBox.getItems().addAll(storeController.getItemTypesFromDatabase());
 		Button submitButton = new Button(Specifications.getInstance().getResources().getString("ok"));
-		submitButton.setOnAction(e->{
+		submitButton.setOnAction(e -> {
 			item.setDescription(descriptionTF.getText());
 			item.setName(nameTF.getText());
+			if(item.getItemPicture() == null) item.setItemPicture(" ");
 			item.setTypeId(typeBox.getValue().getTypeId());
 			storeController.writeItemToDatabase(item);
+			this.close();
 		});
 		newItemPane.getChildren().addAll(nameTF, descriptionTF, fcButton, typeBox, submitButton);	
 		GridPane.setConstraints(nameTF, 0, 0);
