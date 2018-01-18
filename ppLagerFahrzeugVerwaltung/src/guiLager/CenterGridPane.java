@@ -2,6 +2,7 @@ package guiLager;
 
 
 import application.Specifications;
+import controller.StoreController;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -17,8 +18,10 @@ import model.Item;
 public class CenterGridPane extends GridPane {
 
 	private int rowCounter = 1;
+	private StoreController storeController;
 	
 	public CenterGridPane() {
+		this.storeController = new StoreController();
 		setUpHeadlines();
 	}
 	
@@ -49,19 +52,27 @@ public class CenterGridPane extends GridPane {
 		setGridLinesVisible(true);
 	}
 	
-	public void addItemToList(Item item) {
-		ImageView image = new ImageView(new Image(item.getItemPicture()));
+	public void addItemToList(Item item, ContainerPane containerPane) {
+		String itemPicture = item.getItemPicture();
+		ImageView image = new ImageView();
+		if (!itemPicture.isEmpty()) {
+			image = new ImageView(new Image(itemPicture));
+		}
 		Text description = new Text(item.getDescription());
 		Text date = new Text(item.getEntrydate().toString());
 		VBox buttonsVBox = new VBox(10);
 		ReservationButton reservationButton = new ReservationButton(Specifications.getInstance().getResources().getString("reserve"), item);
 		Button removeItemButton = new Button(Specifications.getInstance().getResources().getString("removeItem"));
-		removeItemButton.setVisible(false); // add visibility with UserRights
+		removeItemButton.setVisible(true); // add visibility with UserRights
+		removeItemButton.setOnAction(e -> {
+			storeController.removeItemFromDatabase(item);
+			containerPane.initCenter();
+		});
 		buttonsVBox.getChildren().addAll(reservationButton, removeItemButton);
 		getChildren().addAll(image, description, date, buttonsVBox);
 		GridPane.setConstraints(image, 0, rowCounter);
 		GridPane.setConstraints(description, 1, rowCounter);
 		GridPane.setConstraints(date, 2, rowCounter);
-		GridPane.setConstraints(reservationButton, 3, rowCounter);
+		GridPane.setConstraints(buttonsVBox, 3, rowCounter);
 	}
 }

@@ -19,9 +19,11 @@ public class NewItemWindow extends Stage {
 	GridPane newItemPane;
 	Item item = null;
 	StoreController storeController;
+	ContainerPane containerPane;
 	
-	public NewItemWindow(StoreController storeController) {
+	public NewItemWindow(StoreController storeController, ContainerPane containerPane) {
 		this.storeController = storeController;
+		this.containerPane = containerPane;
 		item = new Item();
 		newItemPane = new GridPane();
 		setUpGridPane();
@@ -35,6 +37,7 @@ public class NewItemWindow extends Stage {
 		descriptionTF.setPromptText(Specifications.getInstance().getResources().getString("description"));
 		Calendar cal = Calendar.getInstance();
 		item.setEntrydate(cal.getTime());
+		item.setItemPicture("");
 		Button fcButton = new Button(Specifications.getInstance().getResources().getString("choosePicture"));
 		fcButton.setOnAction(e->{
 			FileChooser fc = new FileChooser();
@@ -55,6 +58,7 @@ public class NewItemWindow extends Stage {
 			item.setTypeId(typeBox.getValue().getTypeId());
 			storeController.writeItemToDatabase(item);
 			this.close();
+			containerPane.initCenter();
 		});
 		newItemPane.getChildren().addAll(nameTF, descriptionTF, fcButton, typeBox, submitButton);	
 		GridPane.setConstraints(nameTF, 0, 0);
