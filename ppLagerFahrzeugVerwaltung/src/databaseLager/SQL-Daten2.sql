@@ -7,7 +7,7 @@ INSERT INTO `mydb`.`User`(`username`, `password`, `role`, `email`, `first_name`,
 INSERT INTO `mydb`.`User`(`username`, `password`, `role`, `email`, `first_name`, `last_name`, `new_user`) VALUES ('ASkowasch', '123456', '1', 'anja.skowasch@hof-university.de', 'Anja', 'Skowasch', '1');
 INSERT INTO `mydb`.`User`(`username`, `password`, `role`, `email`, `first_name`, `last_name`, `new_user`) VALUES ('JUnsleber', '123456', '1', 'julian.unsleber@hof-university.de', 'Julian', 'Unsleber', '1');
 INSERT INTO `mydb`.`User`(`username`, `password`, `role`, `email`, `new_user`) VALUES ('Admin', 'admin', '1', 'zu_ersetzen', '1');
-INSERT INTO `mydb`.`User`(`username`, `password`, `role`, `email`, `new_user`) VALUES ('User', 'user', '1', 'zu_ersetzen', '1');
+INSERT INTO `mydb`.`User`(`username`, `password`, `role`, `email`, `new_user`) VALUES ('User', 'user', '3', 'zu_ersetzen', '1');
 
 
 INSERT INTO `mydb`.`Item_type`(`type_name`, `type_kind`) VALUES ('PKW', '1');

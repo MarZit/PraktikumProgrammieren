@@ -41,7 +41,11 @@ import model.Role_;
 import model.User;
 import model.User_;
 
-
+/**
+ * Klasse enhält alle benötigten Datenbankabfragen welche für das Programm
+ * @author Julian
+ *
+ */
 public class Queries {
 	
 	
@@ -54,9 +58,9 @@ public class Queries {
 	
     
     
-    //Select Befehle
+    /**Select-Befehle*/
 	
-    //Item Select
+    /**Item Select-Befehle*/
 	public List<Item> getItemsByItemType(int item_type){
 		
 		EntityManager m = factory.createEntityManager();
@@ -149,7 +153,7 @@ public class Queries {
 	
 	
 	
-	//User Select
+	/**User Select-Befehle*/
 	public User getUserByUserID(int user_id) {
 		
 		EntityManager m = factory.createEntityManager();
@@ -214,7 +218,7 @@ public class Queries {
 	
 	
 	
-	//Role Select
+	/**Role Select-Befehle*/
 	public List <Role> getRoles() {
 		
 		EntityManager m = factory.createEntityManager();
@@ -247,7 +251,7 @@ public class Queries {
 	    }
 	
 	
-	//ItemReservation Select
+	/**ItemReservation Select-Befehle*/
 	
 	public ItemReservation getItemReservationByReservationID(int res_id) {
 		
@@ -321,7 +325,6 @@ public class Queries {
 	    }
 	
 	
-	//Between Statements???
 	public List <ItemReservation> getItemReservationsBetweenDates(Date startdate, Date enddate) {
 		
 		EntityManager m = factory.createEntityManager();
@@ -394,7 +397,7 @@ public class Queries {
 		m.close();
 		return res;
 	    }
-	//ItemType Select
+	/**ItemType Select-Befehle*/
 	
 	public ItemType getItemTypeByTypeId(int type_id) {
 		
@@ -442,9 +445,8 @@ public class Queries {
 		return res;
 	    }
 	
-	//ItemTypeRoleRelation Select
+	/**ItemTypeRoleRelation Select-Befehle*/
 	
-	//Path?
 	public List <ItemTypeRoleRelation> getItemTypeRoleRelationsByTypeId(int type_id) {
 		
 		
@@ -462,7 +464,6 @@ public class Queries {
 		return res;
 	    }
 	
-	//Path?
 	public List <ItemTypeRoleRelation> getItemTypeRoleRelationsByRoleId(int role_id) {
 		
 		
@@ -481,7 +482,6 @@ public class Queries {
 	    }
 	
 	
-	//Path?
 	public ItemTypeRoleRelation getItemTypeRoleRelationsByRoleAndTypeId(int role_id, int type_id) {
 		
 		
@@ -503,7 +503,7 @@ public class Queries {
 	    }
 	
 	
-	//ItemUsed Select
+	/**ItemUsed Select-Befehle*/
 	
 	public List <ItemUsed> getItemUsedByTypeId(int type_id) {
 		
@@ -604,7 +604,7 @@ public class Queries {
 	
 	
 	
-	//Update Befehle
+	/**Update-Befehle*/
 	
 	public void updateReservation(ItemReservation reservation) {
 	    
@@ -768,7 +768,7 @@ public void updateItemUsed(ItemUsed used) {
 }
 
 	
-	//Insert Befehle
+	/**Insert-Befehle*/
 
 	public void insertReservation(ItemReservation reservation) {
     	
@@ -860,7 +860,7 @@ public void updateItemUsed(ItemUsed used) {
 		}
 
 
-	//Delete Befehle
+	/**Delete-Befehle*/
 	
 	public void deleteItem(Item item) {
 

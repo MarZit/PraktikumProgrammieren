@@ -10,6 +10,11 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
+/**
+ * Klasse dient zum Erstellen der Datenbank, sowie dem Einlesen von Standarddaten
+ * @author Julian, Anja
+ *
+ */
 public class DatabaseCreator {
     
    
