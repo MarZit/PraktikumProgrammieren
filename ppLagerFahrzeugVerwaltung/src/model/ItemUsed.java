@@ -6,11 +6,11 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the item_used database table.
+ * The persistent class for the Item_used database table.
  * 
  */
 @Entity
-@Table(name="item_used")
+@Table(name="Item_used")
 @NamedQuery(name="ItemUsed.findAll", query="SELECT i FROM ItemUsed i")
 public class ItemUsed implements Serializable {
 	private static final long serialVersionUID = 1L;
