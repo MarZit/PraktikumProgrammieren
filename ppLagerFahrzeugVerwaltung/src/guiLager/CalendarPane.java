@@ -92,35 +92,30 @@ public class CalendarPane extends GridPane {
 	}
 	
 	private void setUpMonthDays() throws ParseException {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date startDate = formatter.parse(myTodayCalendar.get(Calendar.YEAR) + "-" 
-				+ myTodayCalendar.get(Calendar.MONTH) + "-" 
-				+ myTodayCalendar.getActualMinimum(Calendar.DAY_OF_MONTH));
-		Date endDate = formatter.parse(myTodayCalendar.get(Calendar.YEAR) + "-" 
-				+ myTodayCalendar.get(Calendar.MONTH) + "-" 
-				+ myTodayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-		
-		GregorianCalendar start = new GregorianCalendar();
-		start.setTime(startDate);
+        System.out.println(myTodayCalendar.get(Calendar.YEAR) + " " + myTodayCalendar.get(Calendar.MONTH) + " " + myTodayCalendar.getActualMinimum(Calendar.DAY_OF_MONTH));
 
-		GregorianCalendar end = new GregorianCalendar();
-		end.setTime(endDate);
-		
-		System.out.println(myTodayCalendar.get(Calendar.YEAR) + "-" 
-				+ myTodayCalendar.get(Calendar.MONTH) + "-" 
-				+ myTodayCalendar.getActualMinimum(Calendar.DAY_OF_MONTH) + "   -   " +
-				myTodayCalendar.get(Calendar.YEAR) + "-" 
-				+ myTodayCalendar.get(Calendar.MONTH) + "-" 
-				+ myTodayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-		System.out.println(end.get(Calendar.MONTH) + " " + end.get(Calendar.DAY_OF_WEEK));
-		
-		int numberOfDays = myTodayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-		int startDayOfWeek = start.get(Calendar.DAY_OF_WEEK);
-		for(int i = 1; i <= numberOfDays; i++){
-			int dayOfWeek = (startDayOfWeek + i)%7;
-		    CalendarDay cd = new CalendarDay(i);
-		    getChildren().add(cd);
-		    GridPane.setConstraints(cd, dayOfWeek, (startDayOfWeek+i)/7 +2);
-		}
-	}
+        Calendar start = Calendar.getInstance();
+        start.set(myTodayCalendar.get(Calendar.YEAR), myTodayCalendar.get(Calendar.MONTH), myTodayCalendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+
+        Calendar end = Calendar.getInstance();
+        end.set(myTodayCalendar.get(Calendar.YEAR), myTodayCalendar.get(Calendar.MONTH), myTodayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        
+        int numberOfDays = myTodayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        System.out.println("NOD: " + numberOfDays);
+        int startDayOfWeek = start.get(Calendar.DAY_OF_WEEK);
+        System.out.println(startDayOfWeek);
+        int dayCounter = 1;
+        int y = 0;
+        int i = 0;
+        while(dayCounter <= numberOfDays) {
+            for(int x = 0; x < 7 && dayCounter <= numberOfDays; x++, i++) {
+                if(i == 0) x = startDayOfWeek -1;
+                CalendarDay cd = new CalendarDay(dayCounter);
+                getChildren().add(cd);
+                GridPane.setConstraints(cd, x,  y+2);
+                dayCounter++;
+            }
+            y++;
+        }
+    }
 }

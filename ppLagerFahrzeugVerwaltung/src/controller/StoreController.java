@@ -2,9 +2,11 @@ package controller;
 
 import java.util.ArrayList;
 
+import application.TypeKindEnum;
 import databaseLager.Queries;
 import model.Item;
 import model.ItemType;
+
 
 public class StoreController {
 	
@@ -15,11 +17,6 @@ public class StoreController {
 	public StoreController() {
 //		this.item = item;
 		queries = new Queries();
-	}
-
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "";
 	}
 	
 	public void writeItemToDatabase(Item item) {
@@ -34,13 +31,25 @@ public class StoreController {
 		queries.deleteItem(item);
 	}
 	
-	public ArrayList<ItemType> getItemTypesFromDatabase(){
-//		queries.
-		return null;
+	public ArrayList<ItemType> getItemKindTypeFromDatabase(TypeKindEnum typeKind) {
+		return new ArrayList<ItemType>(queries.getItemTypesByTypeKind(typeKind.getEnumValue()));
 	}
-
 	
-
+	public ArrayList<ItemType> getItemTypesFromDatabase(){
+		return new ArrayList<ItemType>(queries.getItemTypes());
+	}
+	
+	public ArrayList<Item> getItemsFromDatabase(int itemTypeID) {
+		ArrayList<Item> itemList = new ArrayList<Item>(queries.getItemsByItemType(itemTypeID));
+		if (itemList.isEmpty()) {
+			return new ArrayList<Item>();
+		}
+		return itemList;
+	}
+	
+	public void updateItem(Item item) {
+		queries.updateItem(item);
+	}
 	
 	
 }

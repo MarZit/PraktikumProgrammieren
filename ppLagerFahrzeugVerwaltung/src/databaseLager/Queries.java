@@ -46,8 +46,11 @@ public class Queries {
     private EntityManagerFactory factory;
     
     public Queries (){
-    	factory = Persistence.createEntityManagerFactory("ppLagerFahrzeugVerwaltung");
+    	factory = Persistence.createEntityManagerFactory("database");
     }
+	
+    
+    
     //Select Befehle
 	
     //Item Select
@@ -73,7 +76,7 @@ public class Queries {
 		CriteriaBuilder cb = m.getCriteriaBuilder();
 		CriteriaQuery<Item> cq = cb.createQuery(Item.class);
 		Root<Item> item = cq.from(Item.class);
-		cq.select(item).where(cb.equal(item.get(Item_.name), item_name));
+		cq.select(item).where(cb.equal(item.get(Item_.itemName), item_name));
 		
 		TypedQuery <Item> q = m.createQuery(cq);
 		List <Item> res = q.getResultList();
@@ -614,8 +617,8 @@ public void updateItem(Item item) {
 	cq.set(res.get(Item_.description), item.getDescription());
 	cq.set(res.get(Item_.itemPicture), item.getItemPicture());
 	cq.set(res.get(Item_.lent), item.getLent());
-	cq.set(res.get(Item_.name), item.getName());
-	cq.set(res.get(Item_.out), item.getOut());
+	cq.set(res.get(Item_.itemName), item.getName());
+	cq.set(res.get(Item_.isOut), item.getIsOut());
 	cq.set(res.get(Item_.typeId), item.getTypeId());
 
 	cq.where(cb.equal(res.get(Item_.itemId), item.getItemId()));
@@ -754,6 +757,8 @@ public void updateItemUsed(ItemUsed used) {
 
 	public void insertItem(Item item) {
 	
+	System.out.println(item.getName() + " " + item.getDescription() + " " + item.getItemPicture());
+		
 	EntityManager m = factory.createEntityManager();
 
 	m.getTransaction().begin();

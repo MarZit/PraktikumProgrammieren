@@ -1,6 +1,7 @@
 package guiLager;
 
 import application.Specifications;
+import controller.StoreController;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -18,9 +19,11 @@ import model.Item;
 public class ReservationWindow extends Stage {
 	
 	Item item;
+	StoreController storeController;
 	
-	public ReservationWindow(Item item) {
+	public ReservationWindow(Item item, StoreController storeController) {
 		this.item = item;
+		this.storeController = storeController;
 		setTitle(Specifications.getInstance().getResources().getString("reservation"));
 		initModality(Modality.APPLICATION_MODAL);
 		BorderPane reservationPane = new BorderPane();
@@ -44,6 +47,7 @@ public class ReservationWindow extends Stage {
 		okButton.setOnAction(e -> {
 			//add Code to reserve
 			item.setLent((byte)1);
+			storeController.updateItem(item);
 		});
 		centerGridPane.getChildren().addAll(reserveRadioButton, rentRadioButton, beginDateText,
 				endDateText, beginDateDatePicker, endDateDatePicker, okButton);

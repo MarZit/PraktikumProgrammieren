@@ -1,8 +1,12 @@
 package guiLager;
 
+import java.util.ArrayList;
+
 import application.Language;
 import application.Specifications;
+import application.TypeKindEnum;
 import controller.StoreController;
+import databaseLager.Queries;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Menu;
@@ -15,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import model.Item;
+import model.ItemType;
 
 /*
  * @author Marcus Zitzelsberger 
@@ -24,15 +29,18 @@ public class ContainerPane extends BorderPane {
 	
 	private CenterGridPane centerGridPane = null;
 	private StoreController storeController = null;
+	private ComboBox<ItemType> subCategoriesComboBox;
+	private ComboBox<TypeKindEnum> superCategoriesComboBox;
+
 	
 	
 	public ContainerPane() {
 		storeController = new StoreController();
 		initTop();
+		initLeft();
 		if(centerGridPane == null) {
 			initCenter();
 		}
-		initLeft();
 		initRight();
 		initBottom();
 	}
@@ -47,12 +55,12 @@ public class ContainerPane extends BorderPane {
 		databaseMenu.setText(Specifications.getInstance().getResources().getString("database"));
 		MenuItem addNewItemMenuItem = new MenuItem(Specifications.getInstance().getResources().getString("addItem"));
 		addNewItemMenuItem.setOnAction(e->{
-			NewItemWindow newItemWindow = new NewItemWindow(storeController);
+			NewItemWindow newItemWindow = new NewItemWindow(storeController, this);
 			newItemWindow.showAndWait();
 		});
 		MenuItem addNewItemTypeMenuItem = new MenuItem(Specifications.getInstance().getResources().getString("addItemType"));
 		addNewItemTypeMenuItem.setOnAction(e->{
-			NewItemTypeWindow newItemTypeWindow = new NewItemTypeWindow(storeController);
+			NewItemTypeWindow newItemTypeWindow = new NewItemTypeWindow(storeController, this);
 			newItemTypeWindow.showAndWait();
 		});
 		MenuItem removeItemMenuItem = new MenuItem(Specifications.getInstance().getResources().getString("removeItem"));
@@ -83,22 +91,40 @@ public class ContainerPane extends BorderPane {
 
 	private void initLeft() {
 		VBox leftVBox = new VBox(10);
-		ComboBox<Item> superCategoriesComboBox = new ComboBox<>();
+		superCategoriesComboBox = new ComboBox<>();
 		superCategoriesComboBox.setPrefWidth(100.0);
-//		superCategoriesComboBox.getItems().addAll(arg0) add Query here
-		ComboBox<Item> subCategoriesComboBox = new ComboBox<>();
+		superCategoriesComboBox.getItems().addAll(TypeKindEnum.getAll()); //add Query here
+		superCategoriesComboBox.getSelectionModel().select(0);
+		superCategoriesComboBox.setOnAction(e->{
+			subCategoriesComboBox.getItems().clear();
+			subCategoriesComboBox.getItems().addAll(storeController.getItemKindTypeFromDatabase(superCategoriesComboBox.getSelectionModel().getSelectedItem())); 
+		});
+		subCategoriesComboBox = new ComboBox<>();
 		subCategoriesComboBox.setPrefWidth(100.0);
-//		subCategoriesComboBox.getItems().addAll(arg0) add Query here
+		subCategoriesComboBox.getItems().addAll(storeController.getItemKindTypeFromDatabase(superCategoriesComboBox.getSelectionModel().getSelectedItem())); 
+		subCategoriesComboBox.setOnAction(e -> {
+		initCenter();
+		});
 		CalendarPane leftCalendarPane = new CalendarPane();
 		leftVBox.getChildren().addAll(superCategoriesComboBox, subCategoriesComboBox, leftCalendarPane);
 		setLeft(leftVBox);
+		
 	}
 
-	private void initCenter() {
+	public void initCenter() {
 		ScrollPane centerScrollPane = new ScrollPane();
 		centerGridPane = new CenterGridPane();
+		ItemType itmType = subCategoriesComboBox.getSelectionModel().getSelectedItem();
+		if(itmType != null) {
+			int itemTypeID = itmType.getTypeId();
+			ArrayList<Item> itemList = storeController.getItemsFromDatabase(itemTypeID);
+			for (Item item : itemList) {
+				centerGridPane.addItemToList(item, this);
+			}
+		}
 		centerScrollPane.setContent(centerGridPane);
 		setCenter(centerScrollPane);
+		
 	}
 	
 	public CenterGridPane getCenterGridPane() {
@@ -106,5 +132,12 @@ public class ContainerPane extends BorderPane {
 			initCenter();
 		}
 		return centerGridPane;
+	}
+	
+	public ComboBox<ItemType> getSubCategoriesComboBox() {
+		if (this.subCategoriesComboBox == null) {
+			initLeft();
+		}
+		return this.subCategoriesComboBox;
 	}
 }

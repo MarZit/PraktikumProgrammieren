@@ -6,11 +6,11 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the Item_reservation database table.
+ * The persistent class for the item_reservation database table.
  * 
  */
 @Entity
-@Table(name="Item_reservation")
+@Table(name="item_reservation")
 @NamedQuery(name="ItemReservation.findAll", query="SELECT i FROM ItemReservation i")
 public class ItemReservation implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -37,8 +37,7 @@ public class ItemReservation implements Serializable {
 	@Column(name="user_id")
 	private int userId;
 
-	public ItemReservation() {
-	}
+	public ItemReservation() {}
 
 	public int getReservationId() {
 		return this.reservationId;
@@ -102,32 +101,6 @@ public class ItemReservation implements Serializable {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
-	}
-
-	public void setOpen(boolean b) {
-		if(b) this.open = 1;
-		else this.open = 0;
-		
-	}
-
-	public void setOverrun(boolean b) {
-		if(b) this.overrun = 1;
-		else this.overrun = 0;
-	}
-	
-	public boolean isOpen(){
-		if (open == 1){
-			return true;
-		}
-		else return false;
-		
-	}
-	
-	public boolean isOverrun(){
-		if (overrun == 1){
-			return true;
-		}
-		else return false;
 	}
 
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- * The primary key class for the Item_type_role_relation database table.
+ * The primary key class for the item_type_role_relation database table.
  * 
  */
 @Embeddable
