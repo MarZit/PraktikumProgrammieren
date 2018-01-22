@@ -13,13 +13,11 @@ import model.ItemType;
 
 public class StoreController {
 	
-//	private Item item;
 	private Queries queries;
 	private FileExport fileExport;
 
 	
 	public StoreController() {
-//		this.item = item;
 		queries = new Queries();
 		fileExport = new FileExport();
 	}

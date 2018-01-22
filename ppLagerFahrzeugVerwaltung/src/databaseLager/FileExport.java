@@ -13,6 +13,12 @@ import java.sql.Statement;
 import javafx.stage.FileChooser;
 
 public class FileExport {
+	
+	/**
+	 * 
+	 * @author Markus Exner
+	 *
+	 */
 
 	private Connection connection;
 	private String     usr_name	= "root";
