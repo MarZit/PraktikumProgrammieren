@@ -1,8 +1,11 @@
 package controller;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import application.TypeKindEnum;
+import databaseLager.FileExport;
 import databaseLager.Queries;
 import model.Item;
 import model.ItemType;
@@ -12,11 +15,13 @@ public class StoreController {
 	
 //	private Item item;
 	private Queries queries;
+	private FileExport fileExport;
 
 	
 	public StoreController() {
 //		this.item = item;
 		queries = new Queries();
+		fileExport = new FileExport();
 	}
 	
 	public void writeItemToDatabase(Item item) {
@@ -49,6 +54,14 @@ public class StoreController {
 	
 	public void updateItem(Item item) {
 		queries.updateItem(item);
+	}
+	
+	public void exportDatabase() {
+		try {
+			fileExport.startExport();
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
