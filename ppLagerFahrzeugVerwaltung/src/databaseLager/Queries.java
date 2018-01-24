@@ -154,6 +154,28 @@ public class Queries {
 	
 	
 	/**User Select-Befehle*/
+	
+	public User getUserByNameAndPassword (String name, String pass){
+		
+		EntityManager m = factory.createEntityManager();
+		
+		CriteriaBuilder cb = m.getCriteriaBuilder();
+		CriteriaQuery<User> cq = cb.createQuery(User.class);
+		Root<User> user = cq.from(User.class);
+		
+		Predicate username = cb.equal(user.get(User_.username), name);
+		Predicate password = cb.equal(user.get(User_.password), pass);
+		Predicate p = cb.and(username, password);
+		
+		cq.select(user).where(p);
+		
+		TypedQuery <User> q = m.createQuery(cq);
+		User res = q.getSingleResult();
+		m.close();
+		return res;
+		
+	}
+	
 	public User getUserByUserID(int user_id) {
 		
 		EntityManager m = factory.createEntityManager();

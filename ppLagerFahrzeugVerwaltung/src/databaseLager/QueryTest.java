@@ -7,6 +7,8 @@ import java.util.List;
 
 import  javax.persistence.NoResultException;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.Item;
@@ -30,6 +32,7 @@ import model.User;
 //Nach Ausführen der Klasse werden die geänderten Daten wiederhergestellt
 public class QueryTest {
 
+	public Queries q;
 	
 	public QueryTest(){
 		
@@ -40,8 +43,12 @@ public class QueryTest {
 	
 		/**JUnit Tests für alle Item-Queries*/
 		@SuppressWarnings("deprecation")
+		@BeforeClass
+		public void init(){
+			q = new Queries();
+		}
 		@Test
-		public void itemTest(Queries q){
+		public void itemTest(){
 		Item i = q.getItemByItemID(1);
 		assertEquals("GetItemByItemID: Name muss VW Golf 7 sein", "VW Golf 7", i.getName());
 		
@@ -84,25 +91,20 @@ public class QueryTest {
 		assertEquals("GetItems: Anzahl aller Items muss 35 sein", 35, itemList.size());
 		
 		try{
-		itemDeleteTest(q);
+		itemDeleteTest();
 		}
 		catch(NoResultException e){
 			
 		}
 		
-		restoreItem(q);
+
 
 		}
-		
-		public void restoreItem(Queries q){
-		Item i = q.getItemByItemID(1);
-		i.setName("VW Golf 7");
-		q.updateItem(i);
-		}
+
 		
 		// Methode für Delete Item
 		@Test(expected = NoResultException.class)
-		public void itemDeleteTest(Queries q){
+		public void itemDeleteTest(){
 		Item i = q.getItemByItemID(100);
 		q.deleteItem(i);
 		System.out.println("ItemDeleted");
@@ -112,7 +114,7 @@ public class QueryTest {
 		
 		/**JUnit Tests für alle Role-Queries*/
 		@Test
-		public void roleTests(Queries q){
+		public void roleTests(){
 		List <Role> roleList = q.getRoles();
 		assertEquals("GetRoles: Anzahl aller Roles muss e sein", 3, roleList.size());
 
@@ -140,25 +142,19 @@ public class QueryTest {
 		assertEquals("Insert: Name muss Test sein", "Test", r.getRoleName());
 
 		try{
-		roleDeleteTest(q);
+		roleDeleteTest();
 		}
 		catch(NoResultException e){
 			
 		}
 		
-		restoreRole(q);
 		
 		}
 		
-		public void restoreRole(Queries q){
-		Role r = q.getRoleByRoleID(1);
-		r.setRoleName("admin");
-		q.updateRole(r);
-		}
 		
 		//Methode für Delete Role
 		@Test(expected = NoResultException.class)
-		public void roleDeleteTest(Queries q){
+		public void roleDeleteTest(){
 		Role r = q.getRoleByRoleID(1500);
 		q.deleteRole(r);
 		
@@ -169,16 +165,19 @@ public class QueryTest {
 		
 		//JUnit Tests für alle User-Queries
 		@Test
-		public void userTests(Queries q){
+		public void userTests(){
 		List <User> userList = q.getUsers();
 		assertEquals("GetUsers: Anzahl aller User muss 6 sein", 6, userList.size());
 
 		
+		
 		userList = q.getUsersByRoleID(1);
 		assertEquals("GetUsersByRoleID: Anzahl muss 5 sein", 5, userList.size());
 
+		User u = q.getUserByNameAndPassword("User", "user");
+		assertEquals("GetUserByNameAndPassword: Role muss 3 sein", 3, u.getRole());
 		
-		User u = q.getUserByUserID(5);
+		u = q.getUserByUserID(5);
 		assertEquals("GetUserByUserID: Name muss Admin sein", "Admin", u.getUsername());
 		
 		
@@ -206,25 +205,19 @@ public class QueryTest {
 		assertEquals("Insert: Name muss Test sein", "Test", u.getUsername());
 
 		try{
-		userDeleteTest(q);
+		userDeleteTest();
 		}
 		catch(NoResultException e){
 			
 		}
 		
-		restoreUser(q);
 		
 		}
 		
-		public void restoreUser(Queries q){
-		User u = q.getUserByUserID(5);
-		u.setUsername("Admin");
-		q.updateUser(u);
-		}
 		
 		//Methode für Delete User
 		@Test(expected = NoResultException.class)
-		public void userDeleteTest(Queries q){
+		public void userDeleteTest(){
 		
 		User u = q.getUserByUserID(1500);
 		q.deleteUser(u);
@@ -238,7 +231,7 @@ public class QueryTest {
 		
 		/**JUnit Tests für alle ItemType-Queries*/
 		@Test
-		public void itemTypeTests(Queries q){
+		public void itemTypeTests(){
 		
 		List <ItemType> typeList = q.getItemTypes();
 		assertEquals("GetItemTypes: Anzahl aller ItemTypes muss 7 sein", 7, typeList.size());
@@ -269,25 +262,19 @@ public class QueryTest {
 		assertEquals("GetItemTypesByTypeKind: Anzahl muss 2 sein", 2, typeList.size());
 		
 		try{
-		itemTypeDeleteTest(q);
+		itemTypeDeleteTest();
 		}
 		catch(NoResultException e){
 			
 		}
 		
-		restoreItemType(q);
 		
 		}
 		
-		public void restoreItemType(Queries q){
-		ItemType i = q.getItemTypeByTypeId(1);
-		i.setTypeName("PKW");
-		q.updateItemType(i);
-		}
 		
 		//Methode für Delete ItemType
 		@Test(expected = NoResultException.class)
-		public void itemTypeDeleteTest(Queries q){
+		public void itemTypeDeleteTest(){
 		
 		ItemType type = q.getItemTypeByTypeId(1500);
 		q.deleteItemType(type);
@@ -304,7 +291,7 @@ public class QueryTest {
 		
 		/**JUnit Tests für alle ItemTypeRoleRelation-Queries*/
 		@Test
-		public void itemTypeRoleRelationTests(Queries q){
+		public void itemTypeRoleRelationTests(){
 		
 		ItemTypeRoleRelation typeRole = new ItemTypeRoleRelation();	
 		ItemTypeRoleRelationPK pk = new ItemTypeRoleRelationPK();
@@ -327,7 +314,7 @@ public class QueryTest {
 		
 		
 		try{
-		itemTypeRoleRelationDeleteTest(q);
+		itemTypeRoleRelationDeleteTest();
 		}
 		catch(NoResultException e){
 			
@@ -337,7 +324,7 @@ public class QueryTest {
 		
 		//Methode für Delete ItemTypeRoleRelation
 		@Test(expected = NoResultException.class)
-		public void itemTypeRoleRelationDeleteTest(Queries q){
+		public void itemTypeRoleRelationDeleteTest(){
 		
 		ItemTypeRoleRelation typeRole = q.getItemTypeRoleRelationsByRoleAndTypeId(1, 1);
 		q.deleteItemTypeRoleRelation(typeRole);
@@ -351,7 +338,7 @@ public class QueryTest {
 		/**JUnit Tests für alle ItemUsed-Queries*/
 		@SuppressWarnings("deprecation")
 		@Test
-		public void itemUsedTests(Queries q){
+		public void itemUsedTests(){
 		ItemUsed used = new ItemUsed();
 		used.setItemId(1);
 		used.setTypeId(2);
@@ -387,7 +374,7 @@ public class QueryTest {
 		assertEquals("GetItemUsedBetweenDates: Anzahl muss 1 sein", 1, usedList.size());
 		
 		try{
-		itemUsedDeleteTest(q);
+		itemUsedDeleteTest();
 		}
 		catch(NoResultException e){
 			
@@ -397,7 +384,7 @@ public class QueryTest {
 		
 		//Methode für Delete ItemUsed
 		@Test(expected = NoResultException.class)
-		public void itemUsedDeleteTest(Queries q){
+		public void itemUsedDeleteTest(){
 		ItemUsed used = q.getItemUsedByItemId(1);
 		q.deleteItemUsed(used);
 		
@@ -408,7 +395,7 @@ public class QueryTest {
 		/**JUnit Tests für alle ItemReservation-Queries*/
 		@SuppressWarnings("deprecation")
 		@Test
-		public void itemReservationTests(Queries q){
+		public void itemReservationTests(){
 		
  		ItemReservation res = new ItemReservation();
 		res.setUserId(1);
@@ -448,7 +435,7 @@ public class QueryTest {
 		assertEquals("GetItemReservationsBetweenDates: Größe muss 1 sein", 1, resList.size());
 		
 		try{
-		itemReservationDeleteTest(q);
+		itemReservationDeleteTest();
 		}
 		catch(NoResultException e){
 			
@@ -458,7 +445,7 @@ public class QueryTest {
 		
 		//Methode für Delete ItemReservation
 		@Test(expected = NoResultException.class)
-		public void itemReservationDeleteTest(Queries q){
+		public void itemReservationDeleteTest(){
 		
 		ItemReservation res = q.getItemReservationByReservationID(1);
 		q.deleteItemReservation(res);
@@ -467,18 +454,39 @@ public class QueryTest {
 
 		}
 		
+		@AfterClass
+		public void restore(){
+			Item i = q.getItemByItemID(1);
+			i.setName("VW Golf 7");
+			q.updateItem(i);
+			
+			Role r = q.getRoleByRoleID(1);
+			r.setRoleName("admin");
+			q.updateRole(r);
+			
+			User u = q.getUserByUserID(5);
+			u.setUsername("Admin");
+			q.updateUser(u);
+			
+			ItemType it = q.getItemTypeByTypeId(1);
+			it.setTypeName("PKW");
+			q.updateItemType(it);
+			
+		}
+		
 		public static void main (String [] args){
 			
 			QueryTest test = new QueryTest();
-			Queries q = new Queries();
 			
-			test.itemTest(q);
-			test.itemReservationTests(q);
-			test.itemTypeRoleRelationTests(q);
-			test.itemTypeTests(q);
-			test.itemUsedTests(q);
-			test.roleTests(q);
-			test.userTests(q);
+			test.init();
+			test.itemTest();
+			test.itemReservationTests();
+			test.itemTypeRoleRelationTests();
+			test.itemTypeTests();
+			test.itemUsedTests();
+			test.roleTests();
+			test.userTests();
+			test.restore();
 			
 			
 		}
