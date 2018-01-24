@@ -1,3 +1,5 @@
+/*@author Julian */
+
 INSERT INTO `mydb`.`Role`(`role_name`) VALUES ('admin');
 INSERT INTO `mydb`.`Role`(`role_name`) VALUES ('lagerverwalter');
 INSERT INTO `mydb`.`Role`(`role_name`) VALUES ('user');

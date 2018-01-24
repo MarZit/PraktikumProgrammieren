@@ -1,3 +1,5 @@
+/*@author Julian */
+
 DROP DATABASE IF EXISTS `mydb`;
 
 CREATE DATABASE `mydb`;
@@ -74,13 +76,7 @@ CREATE TABLE `mydb`.`Item_type_role_relation` (
   `type_id` INTEGER UNSIGNED NOT NULL,
   `role_id` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`type_id`, `role_id`)
-);
-
-
-
-/*CREATE VIEW `mydb`.`user_role`
-AS SELECT `r`.`role_name`, `u`.`username`
-FROM `mydb`.`role` as `r` join `mydb`.`user` as `u` on (`r`.`role_id` = `u`.`role`)*/
+)
 
 
 
