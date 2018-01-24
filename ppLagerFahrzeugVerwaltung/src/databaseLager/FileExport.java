@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
 import javafx.stage.FileChooser;
 
 public class FileExport {
@@ -21,15 +22,15 @@ public class FileExport {
 	 */
 
 	private Connection connection;
-	private String     usr_name	= "root";
-	private String     password	= "m37P48z!";
+	private String     usr_name	= "myuser";
+	private String     password	= "password";
 	
 	 private Connection getConnection(String dbname) {
 		 try {
 			if (connection == null || connection.isClosed()) {
 			Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
 			DriverManager.registerDriver(driver);
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dbname + "?useSSL=false", usr_name, password);
+			connection = DriverManager.getConnection("jdbc:mysql://85.214.197.82:3306/" + dbname + "?useSSL=false", usr_name, password);
 			}
 			} catch (Exception e)
 		 		{
@@ -38,16 +39,41 @@ public class FileExport {
 			return connection;
 	 }
 	 
+	 private String getFileExtension(File file) {
+		 String name = file.getName();
+		 try {
+			 return name.substring(name.lastIndexOf(".") + 1);
+		 } catch (Exception e) {
+			System.out.println("Fehler bei getFileExtension Funktion" + e);
+		}
+		 return "";
+	 }
+	 
+	 private boolean isCSV(String extension) {
+		 if (extension.equals("csv")) {
+			 return true;
+		 }
+		 return false;
+	 }
+	 
 	 public void startExport() throws SQLException, IOException {
-		 Connection con = getConnection("database");
+		 Connection con = getConnection("mydb");
 		 String fileExtension = ".csv";
 		 FileChooser fileChooser = new FileChooser();
+		 FileWriter exportFile;
 		 fileChooser.setTitle("Choose Location to save the export");
 		 File selectedFile = null;
 		 while (selectedFile == null) {
 			 selectedFile = fileChooser.showSaveDialog(null);
 		 }
-		 FileWriter exportFile = new FileWriter(selectedFile + fileExtension);;
+		 String alreadyExtension = getFileExtension(selectedFile);
+		 		 
+		 if (isCSV(alreadyExtension)) {
+			 exportFile = new FileWriter(selectedFile);
+		 } else {
+			 exportFile = new FileWriter(selectedFile + fileExtension);
+		 	}
+		 
 		 String query = "select itemName, description, entrydate from item;";
 		 Statement stmt = con.createStatement();
 		 ResultSet rs = stmt.executeQuery(query);
@@ -68,7 +94,6 @@ public class FileExport {
          exportFile.flush();
          exportFile.close();
          con.close();
-         System.out.println("CSV File is created successfully.");
 	 }
 	
 }

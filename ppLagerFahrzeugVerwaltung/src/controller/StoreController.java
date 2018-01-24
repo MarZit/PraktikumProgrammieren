@@ -10,6 +10,11 @@ import databaseLager.Queries;
 import model.Item;
 import model.ItemType;
 
+/**
+ * 
+ * @author Markus Exner
+ *
+ */
 
 public class StoreController {
 	

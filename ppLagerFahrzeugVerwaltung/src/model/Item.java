@@ -24,7 +24,7 @@ public class Item implements Serializable {
 	private Date entrydate;
 
 	@Column(name="item_picture")
-	private String itemPicture;
+	private String itemPicture = "";
 
 	private byte lent;
 

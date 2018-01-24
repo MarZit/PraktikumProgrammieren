@@ -1,47 +1,49 @@
-DROP DATABASE IF EXISTS `database`;
+/*@author Julian */
 
-CREATE DATABASE `database`;
+DROP DATABASE IF EXISTS `mydb`;
+
+CREATE DATABASE `mydb`;
 
 
-CREATE TABLE `database`.`user` (
+CREATE TABLE `mydb`.`user` (
   `user_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(240) NOT NULL,
   `role` INTEGER UNSIGNED NOT NULL,
-  `email` VARCHAR(120) NOT NULL,
+  `email` VARCHAR(120),
   `first_name` VARCHAR(45),
   `last_name` VARCHAR(45),
-  `new_user` BOOLEAN NOT NULL,
+  `new_user` TINYINT,
   PRIMARY KEY (`user_id`)
 );
 
 
 
-CREATE TABLE `database`.`role` (
+CREATE TABLE `mydb`.`role` (
   `role_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `role_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`role_id`)
 );
 
 
-CREATE TABLE `database`.`item_reservation` (
+CREATE TABLE `mydb`.`item_reservation` (
   `reservation_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `item_id` INTEGER UNSIGNED NOT NULL,
   `user_id` INTEGER UNSIGNED NOT NULL,
   `startdate` DATE NOT NULL,
   `enddate` DATE NOT NULL,
-  `open` BOOLEAN,
-  `overrun` BOOLEAN,
+  `open` TINYINT,
+  `overrun` TINYINT,
   `kilometer` INTEGER UNSIGNED,
   PRIMARY KEY (`reservation_id`)
 );
 
 
-CREATE TABLE `database`.`item` (
+CREATE TABLE `mydb`.`item` (
   `item_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `itemName` VARCHAR(45) NOT NULL,
-  `lent` BOOLEAN,
-  `isOut` BOOLEAN NOT NULL,
+  `lent` TINYINT,
+  `isOut` TINYINT,
   `entrydate` DATE,
   `description` VARCHAR(240),
   `item_picture` VARCHAR(120),
@@ -51,7 +53,7 @@ CREATE TABLE `database`.`item` (
 
 
 
-CREATE TABLE `database`.`item_used` (
+CREATE TABLE `mydb`.`item_used` (
   `item_id` INTEGER UNSIGNED NOT NULL,
   `user_id` INTEGER UNSIGNED NOT NULL,
   `type_id` INTEGER UNSIGNED NOT NULL,
@@ -61,7 +63,7 @@ CREATE TABLE `database`.`item_used` (
 
 
 
-CREATE TABLE `database`.`item_type` (
+CREATE TABLE `mydb`.`item_type` (
   `type_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `type_name` VARCHAR(45) NOT NULL,
   `type_kind` INTEGER UNSIGNED NOT NULL,
@@ -70,17 +72,12 @@ CREATE TABLE `database`.`item_type` (
 
 
 
-CREATE TABLE `database`.`item_type_role_relation` (
+CREATE TABLE `mydb`.`item_type_role_relation` (
   `type_id` INTEGER UNSIGNED NOT NULL,
   `role_id` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`type_id`, `role_id`)
-);
+)
 
-
-
--- CREATE VIEW `database`.`user_role`
--- AS SELECT `r`.`role_name`, `u`.`username`
--- FROM `database`.`role` as `r` join `database`.`user` as `u` on (`r`.`role_id` = `u`.`role`)
 
 
 
