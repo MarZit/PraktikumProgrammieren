@@ -29,6 +29,7 @@ public class Main extends Application {
 		}
 	}
 	
+	
 	public static void main(String[] args) {
 		System.out.println("Erstelle Datenbank...");
 		DatabaseCreator db = new DatabaseCreator();

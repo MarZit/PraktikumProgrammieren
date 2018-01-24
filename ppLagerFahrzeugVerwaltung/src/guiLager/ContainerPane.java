@@ -64,7 +64,11 @@ public class ContainerPane extends BorderPane {
 			newItemTypeWindow.showAndWait();
 		});
 		MenuItem removeItemMenuItem = new MenuItem(Specifications.getInstance().getResources().getString("removeItem"));
-		databaseMenu.getItems().addAll(addNewItemMenuItem, addNewItemTypeMenuItem, removeItemMenuItem);
+		MenuItem exportDatabase = new MenuItem(Specifications.getInstance().getResources().getString("export"));
+		exportDatabase.setOnAction(e -> {
+			storeController.exportDatabase();
+		});
+		databaseMenu.getItems().addAll(addNewItemMenuItem, addNewItemTypeMenuItem, removeItemMenuItem, exportDatabase);
 		Menu statisticsMenu = new Menu();
 		statisticsMenu.setText(Specifications.getInstance().getResources().getString("statistics"));
 		topMenuBar.getMenus().addAll(userMenu, databaseMenu, statisticsMenu);
