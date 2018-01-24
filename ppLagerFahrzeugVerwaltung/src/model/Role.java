@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the Role database table.
+ * The persistent class for the role database table.
  * 
  */
 @Entity

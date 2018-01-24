@@ -16,9 +16,11 @@ public class NewItemTypeWindow extends Stage {
 	GridPane newItemTypePane;
 	ItemType itemType = null;
 	StoreController storeController;
+	ContainerPane containerPane;
 	
-	public NewItemTypeWindow(StoreController storeController) {
+	public NewItemTypeWindow(StoreController storeController, ContainerPane container) {
 		this.storeController = storeController;
+		this.containerPane = container;
 		itemType = new ItemType();
 		newItemTypePane = new GridPane();
 		setUpGridPane();
@@ -38,6 +40,9 @@ public class NewItemTypeWindow extends Stage {
 			itemType.setTypeKind(typeKindBox.getValue().getEnumValue());
 			System.out.println(itemType.getTypeName() + "-" + itemType.getTypeKind());
 			storeController.writeItemTypeToDatabase(itemType);
+			containerPane.getSubCategoriesComboBox().getItems().clear();
+			containerPane.getSubCategoriesComboBox().getItems().addAll(storeController.getItemTypesFromDatabase());
+			
 		});
 		newItemTypePane.getChildren().addAll(typeNameTF, typeKindBox, submitButton);
 		GridPane.setConstraints(typeNameTF, 0, 0);

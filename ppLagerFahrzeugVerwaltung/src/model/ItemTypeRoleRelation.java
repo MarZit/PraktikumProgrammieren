@@ -5,11 +5,11 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the Item_type_role_relation database table.
+ * The persistent class for the item_type_role_relation database table.
  * 
  */
 @Entity
-@Table(name="Item_type_role_relation")
+@Table(name="item_type_role_relation")
 @NamedQuery(name="ItemTypeRoleRelation.findAll", query="SELECT i FROM ItemTypeRoleRelation i")
 public class ItemTypeRoleRelation implements Serializable {
 	private static final long serialVersionUID = 1L;

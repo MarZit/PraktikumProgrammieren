@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -20,9 +19,11 @@ public class NewItemWindow extends Stage {
 	GridPane newItemPane;
 	Item item = null;
 	StoreController storeController;
+	ContainerPane containerPane;
 	
-	public NewItemWindow(StoreController storeController) {
+	public NewItemWindow(StoreController storeController, ContainerPane containerPane) {
 		this.storeController = storeController;
+		this.containerPane = containerPane;
 		item = new Item();
 		newItemPane = new GridPane();
 		setUpGridPane();
@@ -36,6 +37,7 @@ public class NewItemWindow extends Stage {
 		descriptionTF.setPromptText(Specifications.getInstance().getResources().getString("description"));
 		Calendar cal = Calendar.getInstance();
 		item.setEntrydate(cal.getTime());
+		item.setItemPicture("");
 		Button fcButton = new Button(Specifications.getInstance().getResources().getString("choosePicture"));
 		fcButton.setOnAction(e->{
 			FileChooser fc = new FileChooser();
@@ -44,16 +46,19 @@ public class NewItemWindow extends Stage {
 		item.setLent((byte)0);
 		TextField nameTF = new TextField();
 		nameTF.setPromptText(Specifications.getInstance().getResources().getString("name"));
-		item.setOut((byte)0);
+		item.setIsOut((byte)0);
 		ComboBox<ItemType> typeBox = new ComboBox<>();
 		typeBox.setPromptText(Specifications.getInstance().getResources().getString("itemType"));
 		typeBox.getItems().addAll(storeController.getItemTypesFromDatabase());
 		Button submitButton = new Button(Specifications.getInstance().getResources().getString("ok"));
-		submitButton.setOnAction(e->{
+		submitButton.setOnAction(e -> {
 			item.setDescription(descriptionTF.getText());
 			item.setName(nameTF.getText());
+			if(item.getItemPicture() == null) item.setItemPicture(" ");
 			item.setTypeId(typeBox.getValue().getTypeId());
 			storeController.writeItemToDatabase(item);
+			this.close();
+			containerPane.initCenter();
 		});
 		newItemPane.getChildren().addAll(nameTF, descriptionTF, fcButton, typeBox, submitButton);	
 		GridPane.setConstraints(nameTF, 0, 0);

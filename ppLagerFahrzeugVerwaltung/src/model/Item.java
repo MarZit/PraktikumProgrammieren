@@ -1,15 +1,15 @@
 package model;
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 
 
 /**
- * The persistent class for the Item database table.
+ * The persistent class for the item database table.
  * 
  */
 @Entity
+@Table(name="item")
 @NamedQuery(name="Item.findAll", query="SELECT i FROM Item i")
 public class Item implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,9 +28,9 @@ public class Item implements Serializable {
 
 	private byte lent;
 
-	private String name;
+	private String itemName;
 
-	private byte out;
+	private byte isOut;
 
 	@Column(name="type_id")
 	private int typeId;
@@ -74,41 +74,24 @@ public class Item implements Serializable {
 		return this.lent;
 	}
 
-	public void setLent(boolean b) {
-		if(b){
-			this.lent = 1;
-		}
-		else this.lent = 0;
-	}
-	
-	public void setLent(byte b) {
-
-			this.lent = b;
-
+	public void setLent(byte lent) {
+		this.lent = lent;
 	}
 
 	public String getName() {
-		return this.name;
+		return this.itemName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.itemName = name;
 	}
 
-	public byte getOut() {
-		return this.out;
+	public byte getIsOut() {
+		return this.isOut;
 	}
 
-	public void setOut(boolean b) {
-		if(b){
-			this.out = 1;
-		}
-		else this.out = 0;
-	}
-	
-	public void setOut(byte b) {
-
-			this.out = b;
+	public void setIsOut(byte out) {
+		this.isOut = out;
 	}
 
 	public int getTypeId() {
@@ -117,20 +100,6 @@ public class Item implements Serializable {
 
 	public void setTypeId(int typeId) {
 		this.typeId = typeId;
-	}
-	
-	public boolean isOut(){
-		if(out == 1){
-			return true;
-		}
-		else return false;
-	}
-	
-	public boolean isLent(){
-		if(lent == 1){
-			return true;
-		}
-		else return false;
 	}
 
 }
