@@ -6,9 +6,10 @@ import javax.persistence.*;
 
 /**
  * The persistent class for the role database table.
- * 
+ * @author Anja Skowasch, Julian Unsleber, Marcus Zitzelsberger, Markus Exner
  */
 @Entity
+@Table(name="role")
 @NamedQuery(name="Role.findAll", query="SELECT r FROM Role r")
 public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -37,6 +38,12 @@ public class Role implements Serializable {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.getRoleName();
 	}
 
 }

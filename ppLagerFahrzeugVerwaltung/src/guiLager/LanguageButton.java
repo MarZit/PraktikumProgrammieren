@@ -4,6 +4,12 @@ import application.Language;
 import application.LanguageSelector;
 import javafx.scene.control.Button;
 
+/**
+ * 
+ * @author Marcus Zitzelsberger
+ *
+ */
+
 public class LanguageButton extends Button {
 	
 	Language language;

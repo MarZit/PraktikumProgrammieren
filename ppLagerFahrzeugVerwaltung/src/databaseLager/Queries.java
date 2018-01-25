@@ -1,6 +1,7 @@
 package databaseLager;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,12 +15,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
+
 
 import model.ItemTypeRoleRelationPK_;
 import model.Item_;
@@ -38,7 +38,11 @@ import model.Role_;
 import model.User;
 import model.User_;
 
-
+/**
+ * Klasse enhält alle benötigten Datenbankabfragen welche für das Programm
+ * @author Julian
+ *
+ */
 public class Queries {
 	
 	
@@ -51,9 +55,9 @@ public class Queries {
 	
     
     
-    //Select Befehle
+    /**Select-Befehle*/
 	
-    //Item Select
+    /**Item Select-Befehle*/
 	public List<Item> getItemsByItemType(int item_type){
 		
 		EntityManager m = factory.createEntityManager();
@@ -85,23 +89,32 @@ public class Queries {
 	    }
 	
 	
-	//Join???
 	public List<Item> getItemsByItemKind(int type_kind) {
+
 		
 		EntityManager m = factory.createEntityManager();
 		
 		CriteriaBuilder cb = m.getCriteriaBuilder();
 		CriteriaQuery<Item> cq = cb.createQuery(Item.class);
+		
 		Root<Item> item = cq.from(Item.class);
-		Root<ItemType> type = cq.from(ItemType.class);
-		Join<Item, ItemType> itemTypeJoin = item.join("typeId", JoinType.INNER);
-		cq.orderBy(cb.asc(item.get(Item_.typeId)));
-		cq.select(item).where(cb.equal(type.get(ItemType_.typeKind), type_kind));
+		
+		
+		Subquery<Integer> sq = cq.subquery(Integer.class);
+		Root<ItemType> itemType = sq.from(ItemType.class);
+		
+		sq.select(itemType.get(ItemType_.typeId)).where(cb.equal(itemType.get(ItemType_.typeKind), type_kind));
+		cq.select(item).where(cb.in(item.get(Item_.typeId)).value(sq));
 		
 		TypedQuery <Item> q = m.createQuery(cq);
 		List <Item> res = q.getResultList();
 		m.close();
 		return res;
+		
+		
+		
+		
+		
 	}
 	
 	public Item getItemByItemID(int item_id) {
@@ -137,7 +150,29 @@ public class Queries {
 	
 	
 	
-	//User Select
+	/**User Select-Befehle*/
+	
+	public User getUserByNameAndPassword (String name, String pass){
+		
+		EntityManager m = factory.createEntityManager();
+		
+		CriteriaBuilder cb = m.getCriteriaBuilder();
+		CriteriaQuery<User> cq = cb.createQuery(User.class);
+		Root<User> user = cq.from(User.class);
+		
+		Predicate username = cb.equal(user.get(User_.username), name);
+		Predicate password = cb.equal(user.get(User_.password), pass);
+		Predicate p = cb.and(username, password);
+		
+		cq.select(user).where(p);
+		
+		TypedQuery <User> q = m.createQuery(cq);
+		User res = q.getSingleResult();
+		m.close();
+		return res;
+		
+	}
+	
 	public User getUserByUserID(int user_id) {
 		
 		EntityManager m = factory.createEntityManager();
@@ -160,7 +195,6 @@ public class Queries {
 		CriteriaBuilder cb = m.getCriteriaBuilder();
 		CriteriaQuery<User> cq = cb.createQuery(User.class);
 		Root<User> user = cq.from(User.class);
-		cq.orderBy(cb.asc(user.get(User_.lastName)));
 		cq.select(user).where(cb.equal(user.get(User_.username), userName));	
 		
 		TypedQuery <User> q = m.createQuery(cq);
@@ -203,7 +237,7 @@ public class Queries {
 	
 	
 	
-	//Role Select
+	/**Role Select-Befehle*/
 	public List <Role> getRoles() {
 		
 		EntityManager m = factory.createEntityManager();
@@ -236,7 +270,7 @@ public class Queries {
 	    }
 	
 	
-	//ItemReservation Select
+	/**ItemReservation Select-Befehle*/
 	
 	public ItemReservation getItemReservationByReservationID(int res_id) {
 		
@@ -285,7 +319,7 @@ public class Queries {
 	    }
 	
 	
-	//Between statement???
+
 	public List <ItemReservation> getItemReservationsBySingleDate(Date date) {
 		
 		EntityManager m = factory.createEntityManager();
@@ -293,7 +327,16 @@ public class Queries {
 		CriteriaBuilder cb = m.getCriteriaBuilder();
 		CriteriaQuery<ItemReservation> cq = cb.createQuery(ItemReservation.class);
 		Root<ItemReservation> reservation = cq.from(ItemReservation.class);
-		cq.select(reservation).where(cb.between( (Expression<? extends Date>) date, (Expression<? extends Date>) reservation.get(ItemReservation_.startdate), (Expression<? extends Date>) reservation.get(ItemReservation_.enddate)));	
+		
+		List<Predicate> conditionsList = new ArrayList<Predicate>();
+		
+		Predicate pg = cb.lessThanOrEqualTo(reservation.get(ItemReservation_.startdate), date); 
+		Predicate pl = cb.greaterThanOrEqualTo(reservation.get(ItemReservation_.enddate), date);
+		
+		conditionsList.add(pg);
+		conditionsList.add(pl);
+		
+		cq.select(reservation).where(conditionsList.toArray(new Predicate[]{}));
 		TypedQuery <ItemReservation> q = m.createQuery(cq);
 		List <ItemReservation> res = q.getResultList();
 		m.close();
@@ -301,7 +344,6 @@ public class Queries {
 	    }
 	
 	
-	//Between Statements???
 	public List <ItemReservation> getItemReservationsBetweenDates(Date startdate, Date enddate) {
 		
 		EntityManager m = factory.createEntityManager();
@@ -309,9 +351,15 @@ public class Queries {
 		CriteriaBuilder cb = m.getCriteriaBuilder();
 		CriteriaQuery<ItemReservation> cq = cb.createQuery(ItemReservation.class);
 		Root<ItemReservation> reservation = cq.from(ItemReservation.class);
-		Predicate startdateBetween = cb.between( (Expression<? extends Date>) reservation.get(ItemReservation_.startdate), (Expression<? extends Date>) startdate, (Expression<? extends Date>) enddate);
-		Predicate enddateBetween = cb.between( (Expression<? extends Date>) reservation.get(ItemReservation_.enddate), (Expression<? extends Date>) startdate, (Expression<? extends Date>) enddate);
-		Predicate p = cb.or(startdateBetween, enddateBetween);
+		
+		
+		Predicate start = cb.between(reservation.get(ItemReservation_.startdate), startdate, enddate);
+		Predicate end = cb.between(reservation.get(ItemReservation_.enddate), startdate, enddate);
+		
+		
+		Predicate p = cb.or(start, end);
+
+
 		cq.select(reservation).where(p);	
 		TypedQuery <ItemReservation> q = m.createQuery(cq);
 		List <ItemReservation> res = q.getResultList();
@@ -368,7 +416,7 @@ public class Queries {
 		m.close();
 		return res;
 	    }
-	//ItemType Select
+	/**ItemType Select-Befehle*/
 	
 	public ItemType getItemTypeByTypeId(int type_id) {
 		
@@ -416,9 +464,8 @@ public class Queries {
 		return res;
 	    }
 	
-	//ItemTypeRoleRelation Select
+	/**ItemTypeRoleRelation Select-Befehle*/
 	
-	//Path?
 	public List <ItemTypeRoleRelation> getItemTypeRoleRelationsByTypeId(int type_id) {
 		
 		
@@ -436,7 +483,6 @@ public class Queries {
 		return res;
 	    }
 	
-	//Path?
 	public List <ItemTypeRoleRelation> getItemTypeRoleRelationsByRoleId(int role_id) {
 		
 		
@@ -455,7 +501,6 @@ public class Queries {
 	    }
 	
 	
-	//Path?
 	public ItemTypeRoleRelation getItemTypeRoleRelationsByRoleAndTypeId(int role_id, int type_id) {
 		
 		
@@ -477,7 +522,7 @@ public class Queries {
 	    }
 	
 	
-	//ItemUsed Select
+	/**ItemUsed Select-Befehle*/
 	
 	public List <ItemUsed> getItemUsedByTypeId(int type_id) {
 		
@@ -541,7 +586,6 @@ public class Queries {
 	    }
 	
 	
-	//Between Statment?
 	public List <ItemUsed> getItemUsedBetweenDates(Date startdate, Date enddate) {
 		
 		EntityManager m = factory.createEntityManager();
@@ -549,7 +593,9 @@ public class Queries {
 		CriteriaBuilder cb = m.getCriteriaBuilder();
 		CriteriaQuery<ItemUsed> cq = cb.createQuery(ItemUsed.class);
 		Root<ItemUsed> used = cq.from(ItemUsed.class);
-		cq.select(used).where(cb.between( (Expression<? extends Date>) used.get(ItemUsed_.date), (Expression<? extends Date>) startdate, (Expression<? extends Date>) enddate));	
+		
+		Predicate p = cb.between(used.get(ItemUsed_.date), startdate, enddate);
+		cq.select(used).where(p);	
 		
 		TypedQuery <ItemUsed> q = m.createQuery(cq);
 		List <ItemUsed> res = q.getResultList();
@@ -577,7 +623,7 @@ public class Queries {
 	
 	
 	
-	//Update Befehle
+	/**Update-Befehle*/
 	
 	public void updateReservation(ItemReservation reservation) {
 	    
@@ -741,7 +787,7 @@ public void updateItemUsed(ItemUsed used) {
 }
 
 	
-	//Insert Befehle
+	/**Insert-Befehle*/
 
 	public void insertReservation(ItemReservation reservation) {
     	
@@ -757,8 +803,6 @@ public void updateItemUsed(ItemUsed used) {
 
 	public void insertItem(Item item) {
 	
-	System.out.println(item.getName() + " " + item.getDescription() + " " + item.getItemPicture());
-		
 	EntityManager m = factory.createEntityManager();
 
 	m.getTransaction().begin();
@@ -835,7 +879,7 @@ public void updateItemUsed(ItemUsed used) {
 		}
 
 
-	//Delete Befehle
+	/**Delete-Befehle*/
 	
 	public void deleteItem(Item item) {
 

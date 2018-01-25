@@ -1,12 +1,10 @@
 package guiLager;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import application.Specifications;
+import controller.StoreController;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,11 +13,21 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 
+/**
+ * 
+ * @author Marcus Zitzelsberger
+ *
+ */
+
 public class CalendarPane extends GridPane {
 	
-	Calendar myTodayCalendar = Calendar.getInstance();
+	private Calendar myTodayCalendar = Calendar.getInstance();
+	private ContainerPane containerPane;
+	private StoreController storeController;
 	
-	public CalendarPane() {
+	public CalendarPane(ContainerPane containerPane, StoreController storeController) {
+		this.containerPane = containerPane;
+		this.storeController = storeController;
 		setUpMonth();
 		setAlignment(Pos.CENTER);
 		ColumnConstraints column1 = new ColumnConstraints(30, 30, 30);
@@ -110,7 +118,7 @@ public class CalendarPane extends GridPane {
         while(dayCounter <= numberOfDays) {
             for(int x = 0; x < 7 && dayCounter <= numberOfDays; x++, i++) {
                 if(i == 0) x = startDayOfWeek -1;
-                CalendarDay cd = new CalendarDay(dayCounter);
+                CalendarDay cd = new CalendarDay(dayCounter, this.containerPane, this.storeController);
                 getChildren().add(cd);
                 GridPane.setConstraints(cd, x,  y+2);
                 dayCounter++;

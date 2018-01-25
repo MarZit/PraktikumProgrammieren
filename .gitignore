@@ -1,12 +1,12 @@
 ##### .gitignore FILE FOR THE PROJECT #####
 
 #ignore the meta-inf folder
-META-INF/
+#META-INF/
 
 ##### .gitignore part for Java #####
 
 # Package Files #
-*.jar
+#*.jar
 *.war
 *.ear
 *.zip
@@ -18,7 +18,7 @@ META-INF/
 
 ##### .gitignore part for eclipse ide #####
 .metadata
-bin/
+#bin/
 tmp/
 *.tmp
 *.bak

@@ -2,15 +2,24 @@ package userdata;
 
 import javafx.beans.property.SimpleStringProperty;
 import model.Role;
+import model.User;
+
+/**
+ * 
+ * @author Marcus Zitzelsberger
+ *
+ */
 
 public class Userdata {
 
-	SimpleStringProperty username;
-	Role role;
+	private SimpleStringProperty username;
+	private Role role;
+	private User user;
 	
-	public Userdata(String username, Role role) {
+	public Userdata(String username, Role role, User user) {
 		this.username = new SimpleStringProperty(username);
 		this.role = role;
+		this.user = user;
 	}
 
 	public SimpleStringProperty usernameProperty() {
@@ -19,5 +28,17 @@ public class Userdata {
 
 	public Role getRole() {
 		return role;
+	}
+	
+	public User getUser() {
+		return this.user;
+	}
+	
+	public boolean isAllowed() {
+		if (role.getRoleId() == 1 || role.getRoleId() == 2) {
+			return true;
+		}
+		
+		else return false;
 	}
 }

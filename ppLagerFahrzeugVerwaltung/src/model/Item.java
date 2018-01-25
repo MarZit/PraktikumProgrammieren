@@ -6,7 +6,7 @@ import java.util.Date;
 
 /**
  * The persistent class for the item database table.
- * 
+ * @author Anja Skowasch, Julian Unsleber, Marcus Zitzelsberger, Markus Exner
  */
 @Entity
 @Table(name="item")
@@ -24,7 +24,7 @@ public class Item implements Serializable {
 	private Date entrydate;
 
 	@Column(name="item_picture")
-	private String itemPicture;
+	private String itemPicture = "";
 
 	private byte lent;
 

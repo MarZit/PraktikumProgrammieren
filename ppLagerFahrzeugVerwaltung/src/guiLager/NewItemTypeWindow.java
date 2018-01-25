@@ -12,6 +12,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.ItemType;
 
+/**
+ * 
+ * @author Marcus Zitzelsberger, edited by Markus Exner
+ *
+ */
+
+
 public class NewItemTypeWindow extends Stage {
 	GridPane newItemTypePane;
 	ItemType itemType = null;
@@ -42,6 +49,8 @@ public class NewItemTypeWindow extends Stage {
 			storeController.writeItemTypeToDatabase(itemType);
 			containerPane.getSubCategoriesComboBox().getItems().clear();
 			containerPane.getSubCategoriesComboBox().getItems().addAll(storeController.getItemTypesFromDatabase());
+			containerPane.initLeft();
+			this.close();
 			
 		});
 		newItemTypePane.getChildren().addAll(typeNameTF, typeKindBox, submitButton);

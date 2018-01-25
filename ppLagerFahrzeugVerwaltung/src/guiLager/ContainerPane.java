@@ -6,7 +6,7 @@ import application.Language;
 import application.Specifications;
 import application.TypeKindEnum;
 import controller.StoreController;
-import databaseLager.Queries;
+import databaseLager.DatabaseCreator;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Menu;
@@ -20,9 +20,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import model.Item;
 import model.ItemType;
+import userdata.Userdata;
 
-/*
- * @author Marcus Zitzelsberger 
+/**
+ * @author Marcus Zitzelsberger, edited by Markus Exner 
  */
 
 public class ContainerPane extends BorderPane {
@@ -31,11 +32,13 @@ public class ContainerPane extends BorderPane {
 	private StoreController storeController = null;
 	private ComboBox<ItemType> subCategoriesComboBox;
 	private ComboBox<TypeKindEnum> superCategoriesComboBox;
+	private Userdata currentUser;
 
 	
 	
 	public ContainerPane() {
 		storeController = new StoreController();
+		this.currentUser = Specifications.getInstance().getCurrentUser();
 		initTop();
 		initLeft();
 		if(centerGridPane == null) {
@@ -43,6 +46,7 @@ public class ContainerPane extends BorderPane {
 		}
 		initRight();
 		initBottom();
+		
 	}
 
 	private void initTop() {
@@ -50,6 +54,8 @@ public class ContainerPane extends BorderPane {
 		HBox topHBox = new HBox();
 		MenuBar topMenuBar = new MenuBar();
 		Menu userMenu = new Menu();
+		// Add new user
+		MenuItem addUser = new MenuItem(Specifications.getInstance().getResources().getString("addUser"));
 		userMenu.textProperty().bind(Specifications.getInstance().getCurrentUser().usernameProperty());
 		Menu databaseMenu = new Menu();
 		databaseMenu.setText(Specifications.getInstance().getResources().getString("database"));
@@ -58,20 +64,38 @@ public class ContainerPane extends BorderPane {
 			NewItemWindow newItemWindow = new NewItemWindow(storeController, this);
 			newItemWindow.showAndWait();
 		});
+		//Lagerverwaltung und Admin können neue Items hinzufügen
+		addNewItemMenuItem.setVisible(this.currentUser.isAllowed());
 		MenuItem addNewItemTypeMenuItem = new MenuItem(Specifications.getInstance().getResources().getString("addItemType"));
 		addNewItemTypeMenuItem.setOnAction(e->{
 			NewItemTypeWindow newItemTypeWindow = new NewItemTypeWindow(storeController, this);
 			newItemTypeWindow.showAndWait();
 		});
-		MenuItem removeItemMenuItem = new MenuItem(Specifications.getInstance().getResources().getString("removeItem"));
+		addNewItemTypeMenuItem.setVisible(this.currentUser.isAllowed());
 		MenuItem exportDatabase = new MenuItem(Specifications.getInstance().getResources().getString("export"));
 		exportDatabase.setOnAction(e -> {
 			storeController.exportDatabase();
 		});
-		databaseMenu.getItems().addAll(addNewItemMenuItem, addNewItemTypeMenuItem, removeItemMenuItem, exportDatabase);
-		Menu statisticsMenu = new Menu();
-		statisticsMenu.setText(Specifications.getInstance().getResources().getString("statistics"));
-		topMenuBar.getMenus().addAll(userMenu, databaseMenu, statisticsMenu);
+		/*Datenbank mit Testdaten füllen*/
+		MenuItem fillDatabase = new MenuItem(Specifications.getInstance().getResources().getString("fillDatabase"));
+		fillDatabase.setOnAction(e -> {
+			DatabaseCreator db = new DatabaseCreator();
+			try {
+				db.createData();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		});
+		addUser.setVisible(this.currentUser.isAllowed());
+		addUser.setOnAction(e -> {
+			NewUser newUser = new NewUser(this.storeController);
+			newUser.showAndWait();
+		});
+		databaseMenu.getItems().addAll(addNewItemMenuItem, addNewItemTypeMenuItem, exportDatabase, fillDatabase);
+//		Menu statisticsMenu = new Menu();
+//		statisticsMenu.setText(Specifications.getInstance().getResources().getString("statistics"));
+		topMenuBar.getMenus().addAll(userMenu, databaseMenu);
+		userMenu.getItems().add(addUser);
 		HBox languageButtonsBox = new HBox(10);
 		LanguageButton buttonEnglish = new LanguageButton(Language.EN);
 		LanguageButton buttonGerman = new LanguageButton(Language.DE);
@@ -93,7 +117,7 @@ public class ContainerPane extends BorderPane {
 		
 	}
 
-	private void initLeft() {
+	public void initLeft() {
 		VBox leftVBox = new VBox(10);
 		superCategoriesComboBox = new ComboBox<>();
 		superCategoriesComboBox.setPrefWidth(100.0);
@@ -109,7 +133,7 @@ public class ContainerPane extends BorderPane {
 		subCategoriesComboBox.setOnAction(e -> {
 		initCenter();
 		});
-		CalendarPane leftCalendarPane = new CalendarPane();
+		CalendarPane leftCalendarPane = new CalendarPane(this, this.storeController);
 		leftVBox.getChildren().addAll(superCategoriesComboBox, subCategoriesComboBox, leftCalendarPane);
 		setLeft(leftVBox);
 		
@@ -117,7 +141,7 @@ public class ContainerPane extends BorderPane {
 
 	public void initCenter() {
 		ScrollPane centerScrollPane = new ScrollPane();
-		centerGridPane = new CenterGridPane();
+		centerGridPane = new CenterGridPane(this);
 		ItemType itmType = subCategoriesComboBox.getSelectionModel().getSelectedItem();
 		if(itmType != null) {
 			int itemTypeID = itmType.getTypeId();

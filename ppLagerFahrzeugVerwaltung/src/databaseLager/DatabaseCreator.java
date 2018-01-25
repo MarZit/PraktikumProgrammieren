@@ -1,4 +1,5 @@
-	package databaseLager;
+package databaseLager;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,65 +8,104 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DatabaseCreator 
-{
-	 private Connection connection;
-	 private String     usr_name	= "root";
-	 private String     password	= "m37P48z!";
-	 
-	 private Connection getConnection(String dbname)
-	 {
-		 try {
-			if (connection == null || connection.isClosed()) {
-			Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
-			DriverManager.registerDriver(driver);
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dbname + "?useSSL=false", usr_name, password);
-			}
-			} catch (Exception e)
-		 		{
-				System.err.println("Error while establishing connection to Database " + e);
-		 		}
-			return connection;
-	 }
-	 
-	 public void createSchema()
-	 {
-	 try {
-		 Connection con =  getConnection("mysql");	
-		 Statement stmt = con.createStatement();
-		 con.setAutoCommit(false);
-		 for (String sql : getCreateDDL())
-		 {
-			 stmt.execute(sql);
-		 }
-		 } catch (SQLException e) 
-	 	 {
-			System.out.println("An Error occured while creating the schema"+e);
-			e.printStackTrace();
-		 }
-		 
-	 };
-	 
-	 //Name unserer Datenbank?
-	 private String[] getCreateDDL()
-	 {
-		 try 
-		 {
-		 InputStream inSt = getClass().getResourceAsStream("SQL-Befehl.sql");
-		 BufferedReader br = new BufferedReader(new InputStreamReader(inSt));
-		 String line, sql ="";
-		 while((line = br.readLine())!=null)
-		 	{
-			 sql+= line + "\n";
-			 }
-		 return sql.split("[;]");
-		} catch (IOException e) {
-			System.out.println("An Error occured while reading the sql-file"+e);
-			e.printStackTrace();
-		}
-		return null;
-	 };
+/**
+ * Klasse dient zum Erstellen der Datenbank, sowie dem Einlesen von Standarddaten
+ * @author Julian Unsleber, Anja Skowasch
+ *
+ */
+public class DatabaseCreator {
+    
+    private Connection connection;
+    
+    public Connection getConnection(String dbname) throws Exception {
+	if (connection == null) {
+	    Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+	    DriverManager.registerDriver(driver);
+	    connection = DriverManager.getConnection("jdbc:mysql://85.214.197.82:3306/"  + "?useSSL=true", "myuser", "password");  
+	    
+	}
+	
+	return connection;
+	
+    }
+	
+    
+    public void createSchema () throws Exception {
+	
+	Statement stmt = getConnection("mydb").createStatement();
+	for(String sql: getCreateDDL()){
+	    System.out.println(sql);
+	    stmt.execute(sql);
+	}
+	stmt.close();
+	connection = null;
+	
+    }
+    
+    
+    public void createTriggerAndEvents () throws Exception {
+    	
+    	Statement stmt = getConnection("mydb").createStatement();
+    	for(String sql: getCreateDDLTriggerAndEvents()){
+    	    System.out.println(sql);
+    	    stmt.execute(sql);
+    	}
+    	stmt.close();
+    	connection = null;
+    	
+        }
+    
+    public void createData() throws Exception {
+	Statement stmt = getConnection("mydb").createStatement();
+	for(String sql: getCreateDDLData()){
+	    System.out.println(sql);
+	    stmt.execute(sql);
+	}
+	stmt.close();
+	connection = null;
+	
+    }
+    
+    
+   
+
+
+    private String[] getCreateDDL() throws IOException{
+	InputStream in = getClass().getResourceAsStream("SQL-Befehl.sql");
+	BufferedReader br = new BufferedReader(new InputStreamReader(in));
+	String line, sql = "";
+	while((line = br.readLine()) != null) {
+	    sql += line + "\n";
+	}
+	br.close();
+	
+	return sql.split("[;]");
+	
+    }
+    
+    private String[] getCreateDDLData() throws IOException{
+	InputStream in = getClass().getResourceAsStream("SQL-Daten2.sql");
+	BufferedReader br = new BufferedReader(new InputStreamReader(in));
+	String line, sql = "";
+	while((line = br.readLine()) != null) {
+	    sql += line + "\n";
+	}
+	br.close();
+	
+	return sql.split("[;]");
+    }
+    
+    private String[] getCreateDDLTriggerAndEvents() throws IOException{
+    	InputStream in = getClass().getResourceAsStream("Trigger and Events.sql");
+    	BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    	String line, sql = "";
+    	while((line = br.readLine()) != null) {
+    	    sql += line + "\n";
+    	}
+    	br.close();
+    	
+    	return sql.split("[;]");
+        }
 }

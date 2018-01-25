@@ -3,6 +3,12 @@ package application;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author Marcus Zitzelsberger
+ *
+ */
+
 public enum TypeKindEnum {
 	VEHICLE(0), RENTABLE(1), USABLE(2);
 	

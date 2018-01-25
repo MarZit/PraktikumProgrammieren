@@ -13,7 +13,7 @@ public class Specifications {
 
 	private static Specifications specs;
 	
-	private Userdata currentUser = new Userdata("test", null);
+	private Userdata currentUser = new Userdata("test", null, null);
 	
 	private String serverIP = "85.214.197.82";
 	private String database_dbName = "mydb";
