@@ -13,7 +13,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
@@ -23,6 +22,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Item;
 import model.ItemReservation;
+
+/**
+ * 
+ * @author Marcus Zitzelsberger, Markus Exner
+ *
+ */
 
 public class ReservationWindow extends Stage {
 	
@@ -57,7 +62,14 @@ public class ReservationWindow extends Stage {
 		Button okButton = new Button("ok");
 		okButton.setOnAction(e -> {
 			//add Code to reserve
-			if (beginDateDatePicker.getValue().isAfter(endDateDatePicker.getValue())) {
+			if ((beginDateDatePicker.getValue() == null || endDateDatePicker.getValue() == null)) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle(Specifications.getInstance().getResources().getString("wrongDate"));
+				alert.setHeaderText(Specifications.getInstance().getResources().getString("wrongDateHeader"));
+				alert.setContentText(Specifications.getInstance().getResources().getString("emptyDate"));
+				alert.showAndWait();
+			} 
+			else if (beginDateDatePicker.getValue().isAfter(endDateDatePicker.getValue())) {
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle(Specifications.getInstance().getResources().getString("wrongDate"));
 				alert.setHeaderText(Specifications.getInstance().getResources().getString("wrongDateHeader"));
@@ -83,6 +95,7 @@ public class ReservationWindow extends Stage {
 				itemReservation.setEnddate(theEndDate);
 				itemReservation.setUserId(Specifications.getInstance().getCurrentUser().getUser().getUserId());
 				storeController.updateItem(item);
+				storeController.insertReservation(itemReservation);
 				this.containerPane.initCenter();
 				this.close();
 			}

@@ -15,9 +15,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -42,7 +39,7 @@ import model.User;
 import model.User_;
 
 /**
- * Klasse enh�lt alle ben�tigten Datenbankabfragen welche f�r das Programm
+ * Klasse enhält alle benötigten Datenbankabfragen welche für das Programm
  * @author Julian
  *
  */

@@ -4,6 +4,12 @@ import javafx.beans.property.SimpleStringProperty;
 import model.Role;
 import model.User;
 
+/**
+ * 
+ * @author Marcus Zitzelsberger
+ *
+ */
+
 public class Userdata {
 
 	private SimpleStringProperty username;

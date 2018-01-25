@@ -15,11 +15,17 @@ import javafx.stage.Stage;
 import model.Item;
 import model.ItemType;
 
+/**
+ * 
+ * @author Marcus Zitzelsberger, Markus Exner
+ *
+ */
+
 public class NewItemWindow extends Stage {
-	GridPane newItemPane;
-	Item item = null;
-	StoreController storeController;
-	ContainerPane containerPane;
+	private GridPane newItemPane;
+	private Item item = null;
+	private StoreController storeController;
+	private ContainerPane containerPane;
 	
 	public NewItemWindow(StoreController storeController, ContainerPane containerPane) {
 		this.storeController = storeController;

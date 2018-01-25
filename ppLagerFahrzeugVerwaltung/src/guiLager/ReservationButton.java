@@ -4,6 +4,12 @@ import controller.StoreController;
 import javafx.scene.control.Button;
 import model.Item;
 
+/**
+ * 
+ * @author Marcus Zitzelsberger
+ *
+ */
+
 public class ReservationButton extends Button {
 	private StoreController storeController;
 	private ContainerPane containerPane;

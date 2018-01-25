@@ -3,12 +3,16 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import application.TypeKindEnum;
 import databaseLager.FileExport;
 import databaseLager.Queries;
 import model.Item;
+import model.ItemReservation;
 import model.ItemType;
+import model.Role;
+import model.User;
 
 /**
  * 
@@ -35,6 +39,10 @@ public class StoreController {
 		queries.insertItemType(itemType);
 	}
 	
+	public void writeNewUser(User user) {
+		queries.insertUser(user);
+	}
+	
 	public void removeItemFromDatabase(Item item) {
 		queries.deleteItem(item);
 	}
@@ -55,8 +63,16 @@ public class StoreController {
 		return itemList;
 	}
 	
+	public ArrayList<Role> getRolesFromDatabase() {
+		return new ArrayList<Role>(queries.getRoles());
+	}
+	
 	public void updateItem(Item item) {
 		queries.updateItem(item);
+	}
+	
+	public void insertReservation(ItemReservation itemReservation) {
+		queries.insertReservation(itemReservation);
 	}
 	
 	public void exportDatabase() {

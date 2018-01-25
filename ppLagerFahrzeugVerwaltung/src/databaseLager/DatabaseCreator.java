@@ -12,12 +12,10 @@ import java.sql.Statement;
 
 /**
  * Klasse dient zum Erstellen der Datenbank, sowie dem Einlesen von Standarddaten
- * @author Julian, Anja
+ * @author Julian Unsleber, Anja Skowasch
  *
  */
 public class DatabaseCreator {
-    
-   
     
     private Connection connection;
     
@@ -25,7 +23,7 @@ public class DatabaseCreator {
 	if (connection == null) {
 	    Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
 	    DriverManager.registerDriver(driver);
-	    connection = DriverManager.getConnection("jdbc:mysql://85.214.197.82:3306/" + dbname + "?useSSL=true", "myuser", "password");  
+	    connection = DriverManager.getConnection("jdbc:mysql://85.214.197.82:3306/"  + "?useSSL=true", "myuser", "password");  
 	    
 	}
 	
@@ -110,19 +108,4 @@ public class DatabaseCreator {
     	
     	return sql.split("[;]");
         }
-    
-
-//    public static void main(String[] args) throws Exception{
-//	DatabaseCreator db = new DatabaseCreator();
-//	db.createSchema();
-//	db.createData();
-//	
-//	// Trigger und Events waren geplant aber nicht mehr rechtzeitig zum Laufen gebracht
-//	//db.createTriggerAndEvents();
-//
-//    }
-
-
-
-
 }

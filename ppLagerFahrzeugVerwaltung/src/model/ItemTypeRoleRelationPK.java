@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 /**
  * The primary key class for the item_type_role_relation database table.
- * 
+ * @author Anja Skowasch, Julian Unsleber, Marcus Zitzelsberger, Markus Exner
  */
 @Embeddable
 public class ItemTypeRoleRelationPK implements Serializable {

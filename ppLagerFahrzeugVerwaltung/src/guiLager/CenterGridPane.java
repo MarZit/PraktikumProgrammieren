@@ -1,6 +1,8 @@
 package guiLager;
 
 
+import java.io.File;
+
 import application.Specifications;
 import controller.StoreController;
 import javafx.geometry.HPos;
@@ -17,6 +19,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Item;
 
+/**
+ * 
+ * @author Marcus Zitzelsberger, Markus Exner
+ *
+ */
+
 public class CenterGridPane extends GridPane {
 
 	private int rowCounter = 1;
@@ -26,7 +34,7 @@ public class CenterGridPane extends GridPane {
 	public CenterGridPane(ContainerPane containerPane) {
 		this.storeController = new StoreController();
 		this.containerPane = containerPane;
-		this.setPrefSize(950, 0);
+		this.setPrefSize(1000, 0);
 		this.setMaxSize(Region.USE_COMPUTED_SIZE, 0);
 		setUpHeadlines();
 	}
@@ -76,12 +84,12 @@ public class CenterGridPane extends GridPane {
 	
 	public void addItemToList(Item item, ContainerPane containerPane) {
 		// Check remove button depending on role
-		int currentUserRoleID = Specifications.getInstance().getCurrentUser().getRole().getRoleId();
 		String itemPicture = "";
 		itemPicture = item.getItemPicture();
 		ImageView image = new ImageView();
 		if (!itemPicture.isEmpty()) {
-			image = new ImageView(new Image(itemPicture));
+			System.out.println("Item Picture " + itemPicture);
+			image = new ImageView(new Image(new File(itemPicture).toURI().toString(), 150, 150, true, false));
 		}
 		Text name = new Text(item.getName());
 		Text description = new Text(item.getDescription());
@@ -94,7 +102,7 @@ public class CenterGridPane extends GridPane {
 		ReservationButton reservationButton = new ReservationButton(Specifications.getInstance().getResources().getString("reserve"), item, this.containerPane);
 		Button removeItemButton = new Button(Specifications.getInstance().getResources().getString("removeItem"));
 		
-		removeItemButton.setVisible(currentUserRoleID == 1 || currentUserRoleID == 2); 
+		removeItemButton.setVisible(Specifications.getInstance().getCurrentUser().isAllowed()); 
 		removeItemButton.setOnAction(e -> {
 			storeController.removeItemFromDatabase(item);
 			containerPane.initCenter();

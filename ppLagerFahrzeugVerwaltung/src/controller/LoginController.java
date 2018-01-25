@@ -3,7 +3,6 @@ package controller;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ResourceBundle;
 
 import application.Specifications;
 import databaseLager.Queries;
@@ -12,6 +11,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import model.User;
 import userdata.Userdata;
+
+/**
+ * 
+ * @author Anja Skowasch
+ *
+ */
 
 public class LoginController
 { 
@@ -33,8 +38,8 @@ public class LoginController
 	{
 		try
 		{
-		Queries q = new Queries();
-		User res = q.getUserByNameAndPassword(userName,passWord);
+		Queries queries = new Queries();
+		User res = queries.getUserByNameAndPassword(userName,passWord);
 		Queries q1 = new Queries();
 		Userdata user = new Userdata(res.getUsername(),  q1.getRoleByRoleID(res.getRole()), res);
 		Specifications.getInstance().setCurrentUser(user);
@@ -44,7 +49,7 @@ public class LoginController
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			infoBox("Enter Correct Email and Password", "Failed", null);
+			infoBox("Enter Correct User and Password", "Failed", null);
 		}
 	}
 

@@ -1,15 +1,12 @@
 /*@author Julian */
 
-INSERT INTO `mydb`.`role`(`role_name`) VALUES ('admin');
-INSERT INTO `mydb`.`role`(`role_name`) VALUES ('lagerverwalter');
-INSERT INTO `mydb`.`role`(`role_name`) VALUES ('user');
+
 
 INSERT INTO `mydb`.`user`(`username`, `password`, `role`, `email`, `first_name`, `last_name`, `new_user`) VALUES ('MZitzelsberger', '123456', '1', 'marcus.zitzelsberger@hof-university.de', 'Marcus', 'Zitzelsberger', '1');
 INSERT INTO `mydb`.`user`(`username`, `password`, `role`, `email`, `first_name`, `last_name`, `new_user`) VALUES ('MExner', '123456', '1', 'markus.exner@hof-university.de', 'Markus', 'Exner', '1');
 INSERT INTO `mydb`.`user`(`username`, `password`, `role`, `email`, `first_name`, `last_name`, `new_user`) VALUES ('ASkowasch', '123456', '1', 'anja.skowasch@hof-university.de', 'Anja', 'Skowasch', '1');
 INSERT INTO `mydb`.`user`(`username`, `password`, `role`, `email`, `first_name`, `last_name`, `new_user`) VALUES ('JUnsleber', '123456', '1', 'julian.unsleber@hof-university.de', 'Julian', 'Unsleber', '1');
-INSERT INTO `mydb`.`user`(`username`, `password`, `role`, `email`, `new_user`) VALUES ('Admin', 'admin', '1', 'zu_ersetzen', '1');
-INSERT INTO `mydb`.`user`(`username`, `password`, `role`, `email`, `new_user`) VALUES ('user', 'user', '3', 'zu_ersetzen', '1');
+INSERT INTO `mydb`.`user`(`username`, `password`, `role`, `email`, `new_user`) VALUES ('User', 'user', '3', 'zu_ersetzen', '1');
 
 
 INSERT INTO `mydb`.`item_type`(`type_name`, `type_kind`) VALUES ('PKW', '1');

@@ -1,9 +1,8 @@
 package guiLager;
 
+
 import application.Specifications;
 import controller.LoginController;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -11,10 +10,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+/**
+ * 
+ * @author Marcus Zitzelsberger
+ *
+ */
 
 public class LoginWindow extends Stage {
 	
@@ -22,6 +28,7 @@ public class LoginWindow extends Stage {
 		setTitle(Specifications.getInstance().getResources().getString("login"));
 		BorderPane loginPane = new BorderPane();
 		loginPane.setCenter(initCenter());
+		this.setTitle("Login");
 		Scene loginScene = new Scene(loginPane);
 		setScene(loginScene);
 		initOwner(parentStage);
@@ -40,14 +47,24 @@ public class LoginWindow extends Stage {
 		GridPane.setConstraints(usernameLabel, 0, 0);
 		GridPane.setConstraints(usernameTextField, 1, 0);
 		Label passwordLabel = new Label(Specifications.getInstance().getResources().getString("password") + ":");
+		
 		PasswordField passwordTextField = new PasswordField();
 		passwordTextField.setPromptText(Specifications.getInstance().getResources().getString("password"));
+		
 		Button loginButton = new Button(Specifications.getInstance().getResources().getString("login"));
 		loginButton.setOnAction( e -> {
 			String username = usernameTextField.getText().toString();
 			String password = passwordTextField.getText().toString();
 			LoginController lc = new LoginController(username,password, this);
 		});
+		
+		
+		passwordTextField.setOnKeyPressed(e -> {
+			if (e.getCode() == KeyCode.ENTER) {
+				loginButton.fire();
+			}
+		});
+
 		
 		centerGridPane.getChildren().addAll(passwordLabel, passwordTextField, loginButton);
 		GridPane.setConstraints(passwordLabel, 0, 1);

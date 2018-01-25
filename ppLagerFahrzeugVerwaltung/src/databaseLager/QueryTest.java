@@ -8,8 +8,9 @@ import java.util.List;
 import  javax.persistence.NoResultException;
 
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import model.Item;
 import model.ItemReservation;
@@ -28,27 +29,20 @@ import model.User;
  *
  */
 
-//Mit anderen hinzugef�gten Daten ist der Test nicht aussagekr�ftig
-//Nach Ausf�hren der Klasse werden die ge�nderten Daten wiederhergestellt
+//Mit anderen hinzugefügten Daten ist der Test nicht aussagekräftig
+//Nach Ausführen der Klasse werden die geänderten Daten wiederhergestellt
+//Buchstaben zu Beginn der Methoden dienen nur zur Festlegung der Reihenfolge
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class QueryTest {
-
-	public Queries q;
 	
-	public QueryTest(){
-		
-	}
+	Queries q = new Queries();
 	
-				
-		
-	
-		/**JUnit Tests f�r alle Item-Queries*/
+		/**JUnit Tests für alle Item-Queries*/
 		@SuppressWarnings("deprecation")
-		@BeforeClass
-		public void init(){
-			q = new Queries();
-		}
+		
+		
 		@Test
-		public void itemTest(){
+		public void a_ItemTest(){
 		Item i = q.getItemByItemID(1);
 		assertEquals("GetItemByItemID: Name muss VW Golf 7 sein", "VW Golf 7", i.getName());
 		
@@ -78,8 +72,8 @@ public class QueryTest {
 		newItem.setTypeId(1);
 		newItem.setItemId(100);
 		newItem.setEntrydate(new Date(117,11,21));
-//		newItem.setIsOut(false);
-//		newItem.setIsOut(false);
+		newItem.setIsOut((byte)0);
+		newItem.setLent((byte)0);
 		newItem.setItemPicture("picture");
 		q.insertItem(newItem);
 		System.out.println("ItemInserted");
@@ -90,21 +84,15 @@ public class QueryTest {
 		itemList = q.getItems();
 		assertEquals("GetItems: Anzahl aller Items muss 35 sein", 35, itemList.size());
 		
-		try{
-		itemDeleteTest();
-		}
-		catch(NoResultException e){
-			
-		}
 		
 
 
 		}
 
 		
-		// Methode f�r Delete Item
+		// Methode für Delete Item
 		@Test(expected = NoResultException.class)
-		public void itemDeleteTest(){
+		public void b_ItemDeleteTest(){
 		Item i = q.getItemByItemID(100);
 		q.deleteItem(i);
 		System.out.println("ItemDeleted");
@@ -112,9 +100,9 @@ public class QueryTest {
 		i = q.getItemByItemID(100);
 		}
 		
-		/**JUnit Tests f�r alle Role-Queries*/
+		/**JUnit Tests für alle Role-Queries*/
 		@Test
-		public void roleTests(){
+		public void c_RoleTests(){
 		List <Role> roleList = q.getRoles();
 		assertEquals("GetRoles: Anzahl aller Roles muss e sein", 3, roleList.size());
 
@@ -123,13 +111,13 @@ public class QueryTest {
 		assertEquals("GetRoleByRoleId: Name muss admin sein", "admin", r.getRoleName());
 
 		
-		r.setRoleName("Test");
+		r.setRoleName("TestName");
 		
 		q.updateRole(r);
 		System.out.println("RoleUpdated");
 		
 		r = q.getRoleByRoleID(1);
-		assertEquals("Update: Name muss Test sein", "Test", r.getRoleName());
+		assertEquals("Update: Name muss Test sein", "TestName", r.getRoleName());
 		
 		
 		r = new Role();
@@ -141,20 +129,14 @@ public class QueryTest {
 		r = q.getRoleByRoleID(1500);
 		assertEquals("Insert: Name muss Test sein", "Test", r.getRoleName());
 
-		try{
-		roleDeleteTest();
-		}
-		catch(NoResultException e){
-			
-		}
 		
 		
 		}
 		
 		
-		//Methode f�r Delete Role
+		//Methode für Delete Role
 		@Test(expected = NoResultException.class)
-		public void roleDeleteTest(){
+		public void d_RoleDeleteTest(){
 		Role r = q.getRoleByRoleID(1500);
 		q.deleteRole(r);
 		
@@ -163,9 +145,9 @@ public class QueryTest {
 		}
 		
 		
-		//JUnit Tests f�r alle User-Queries
+		//JUnit Tests für alle User-Queries
 		@Test
-		public void userTests(){
+		public void e_UserTests(){
 		List <User> userList = q.getUsers();
 		assertEquals("GetUsers: Anzahl aller User muss 6 sein", 6, userList.size());
 
@@ -177,17 +159,17 @@ public class QueryTest {
 		User u = q.getUserByNameAndPassword("User", "user");
 		assertEquals("GetUserByNameAndPassword: Role muss 3 sein", 3, u.getRole());
 		
-		u = q.getUserByUserID(5);
+		u = q.getUserByUserID(1);
 		assertEquals("GetUserByUserID: Name muss Admin sein", "Admin", u.getUsername());
 		
 		
 
-		u.setUsername("Test");
+		u.setUsername("TestName");
 		
 		q.updateUser(u);
 		
-		u = q.getUserByUserName("Test");
-		assertEquals("Update: Name muss Test sein", "Test", u.getUsername());
+		u = q.getUserByUserName("TestName");
+		assertEquals("Update: Name muss Test sein", "TestName", u.getUsername());
 		
 		
 		u = new User();
@@ -204,20 +186,14 @@ public class QueryTest {
 		u = q.getUserByUserID(1500);
 		assertEquals("Insert: Name muss Test sein", "Test", u.getUsername());
 
-		try{
-		userDeleteTest();
-		}
-		catch(NoResultException e){
-			
-		}
 		
 		
 		}
 		
 		
-		//Methode f�r Delete User
+		//Methode für Delete User
 		@Test(expected = NoResultException.class)
-		public void userDeleteTest(){
+		public void f_UserDeleteTest(){
 		
 		User u = q.getUserByUserID(1500);
 		q.deleteUser(u);
@@ -229,9 +205,9 @@ public class QueryTest {
 		}
 		
 		
-		/**JUnit Tests f�r alle ItemType-Queries*/
+		/**JUnit Tests für alle ItemType-Queries*/
 		@Test
-		public void itemTypeTests(){
+		public void g_ItemTypeTests(){
 		
 		List <ItemType> typeList = q.getItemTypes();
 		assertEquals("GetItemTypes: Anzahl aller ItemTypes muss 7 sein", 7, typeList.size());
@@ -261,37 +237,27 @@ public class QueryTest {
 		typeList = q.getItemTypesByTypeKind(1);
 		assertEquals("GetItemTypesByTypeKind: Anzahl muss 2 sein", 2, typeList.size());
 		
-		try{
-		itemTypeDeleteTest();
-		}
-		catch(NoResultException e){
-			
-		}
 		
 		
 		}
 		
 		
-		//Methode f�r Delete ItemType
+		//Methode für Delete ItemType
 		@Test(expected = NoResultException.class)
-		public void itemTypeDeleteTest(){
+		public void h_ItemTypeDeleteTest(){
 		
 		ItemType type = q.getItemTypeByTypeId(1500);
 		q.deleteItemType(type);
 		
 		System.out.println("ItemTypeDeleted");
 		
-		try{
 		type = q.getItemTypeByTypeId(1500);
-		}
-		catch(Exception e){
-			System.out.println(e.getStackTrace() + " Wenn nullPointer --> L�schen erfolgreich");
-		}
+
 		}
 		
-		/**JUnit Tests f�r alle ItemTypeRoleRelation-Queries*/
+		/**JUnit Tests für alle ItemTypeRoleRelation-Queries*/
 		@Test
-		public void itemTypeRoleRelationTests(){
+		public void i_ItemTypeRoleRelationTests(){
 		
 		ItemTypeRoleRelation typeRole = new ItemTypeRoleRelation();	
 		ItemTypeRoleRelationPK pk = new ItemTypeRoleRelationPK();
@@ -312,19 +278,12 @@ public class QueryTest {
 		assertEquals("getItemTypeRoleRelationsByTypeId: Anzahl muss 1 sein", 1, typeRoleList.size());
 		
 		
-		
-		try{
-		itemTypeRoleRelationDeleteTest();
-		}
-		catch(NoResultException e){
-			
-		}
 		}
 		
 		
-		//Methode f�r Delete ItemTypeRoleRelation
+		//Methode für Delete ItemTypeRoleRelation
 		@Test(expected = NoResultException.class)
-		public void itemTypeRoleRelationDeleteTest(){
+		public void j_ItemTypeRoleRelationDeleteTest(){
 		
 		ItemTypeRoleRelation typeRole = q.getItemTypeRoleRelationsByRoleAndTypeId(1, 1);
 		q.deleteItemTypeRoleRelation(typeRole);
@@ -335,10 +294,10 @@ public class QueryTest {
 		}
 
 		
-		/**JUnit Tests f�r alle ItemUsed-Queries*/
+		/**JUnit Tests für alle ItemUsed-Queries*/
 		@SuppressWarnings("deprecation")
 		@Test
-		public void itemUsedTests(){
+		public void k_ItemUsedTests(){
 		ItemUsed used = new ItemUsed();
 		used.setItemId(1);
 		used.setTypeId(2);
@@ -372,19 +331,13 @@ public class QueryTest {
 		
 		usedList = q.getItemUsedBetweenDates(new Date(117, 11, 10), new Date(117, 11, 20));
 		assertEquals("GetItemUsedBetweenDates: Anzahl muss 1 sein", 1, usedList.size());
-		
-		try{
-		itemUsedDeleteTest();
-		}
-		catch(NoResultException e){
-			
-		}
+
 		}
 		
 		
-		//Methode f�r Delete ItemUsed
+		//Methode für Delete ItemUsed
 		@Test(expected = NoResultException.class)
-		public void itemUsedDeleteTest(){
+		public void l_ItemUsedDeleteTest(){
 		ItemUsed used = q.getItemUsedByItemId(1);
 		q.deleteItemUsed(used);
 		
@@ -392,10 +345,10 @@ public class QueryTest {
 
 		}
 		
-		/**JUnit Tests f�r alle ItemReservation-Queries*/
+		/**JUnit Tests für alle ItemReservation-Queries*/
 		@SuppressWarnings("deprecation")
 		@Test
-		public void itemReservationTests(){
+		public void m_ItemReservationTests(){
 		
  		ItemReservation res = new ItemReservation();
 		res.setUserId(1);
@@ -403,8 +356,8 @@ public class QueryTest {
 		res.setStartdate(new Date(117, 11, 13));
 		res.setEnddate(new Date(117, 11, 20));
 		res.setReservationId(1);
-//		res.setOpen(true);
-//		res.setOverrun(true);
+		res.setOpen((byte)1);
+		res.setOverrun((byte)1);
 		
 		q.insertReservation(res);
 		
@@ -421,31 +374,25 @@ public class QueryTest {
 		
 		List <ItemReservation> resList;
 		resList = q.getItemReservationsByItemID(2);
-		assertEquals("GetItemReservationsByItemID: Gr��e muss 1 sein", 1, resList.size());
+		assertEquals("GetItemReservationsByItemID: Größe muss 1 sein", 1, resList.size());
 		
 		
 		resList = q.getItemReservationsByUserID(1);
-		assertEquals("GetItemReservationsByUserID: Gr��e muss 1 sein", 1, resList.size());
+		assertEquals("GetItemReservationsByUserID: Größe muss 1 sein", 1, resList.size());
 		
 
 		resList = q.getItemReservationsBySingleDate(new Date(117, 11, 17));
-		assertEquals("GetItemReservationsBySingleDate: Gr��e muss 1 sein", 1, resList.size());
+		assertEquals("GetItemReservationsBySingleDate: Größe muss 1 sein", 1, resList.size());
 		
 		resList = q.getItemReservationsBetweenDates(new Date(117, 11, 12), new Date(117, 11, 23));
-		assertEquals("GetItemReservationsBetweenDates: Gr��e muss 1 sein", 1, resList.size());
+		assertEquals("GetItemReservationsBetweenDates: Größe muss 1 sein", 1, resList.size());
 		
-		try{
-		itemReservationDeleteTest();
-		}
-		catch(NoResultException e){
-			
-		}
 		
 		}
 		
-		//Methode f�r Delete ItemReservation
+		//Methode für Delete ItemReservation
 		@Test(expected = NoResultException.class)
-		public void itemReservationDeleteTest(){
+		public void n_ItemReservationDeleteTest(){
 		
 		ItemReservation res = q.getItemReservationByReservationID(1);
 		q.deleteItemReservation(res);
@@ -455,7 +402,8 @@ public class QueryTest {
 		}
 		
 		@AfterClass
-		public void restore(){
+		public static void restore(){
+			Queries q = new Queries();
 			Item i = q.getItemByItemID(1);
 			i.setName("VW Golf 7");
 			q.updateItem(i);
@@ -464,7 +412,7 @@ public class QueryTest {
 			r.setRoleName("admin");
 			q.updateRole(r);
 			
-			User u = q.getUserByUserID(5);
+			User u = q.getUserByUserID(1);
 			u.setUsername("Admin");
 			q.updateUser(u);
 			
@@ -474,24 +422,7 @@ public class QueryTest {
 			
 		}
 		
-		public static void main (String [] args){
-			
-			QueryTest test = new QueryTest();
-			
-			test.init();
-			test.itemTest();
-			test.itemReservationTests();
-			test.itemTypeRoleRelationTests();
-			test.itemTypeTests();
-			test.itemUsedTests();
-			test.roleTests();
-			test.userTests();
-			test.restore();
-			
-			
-		}
 		
 				
 	}
-
 
