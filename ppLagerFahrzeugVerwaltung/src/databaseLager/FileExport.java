@@ -58,14 +58,13 @@ public class FileExport {
 	 
 	 public void startExport() throws SQLException, IOException {
 		 Connection con = getConnection("mydb");
-		 String fileExtension = ".csv";
 		 FileChooser fileChooser = new FileChooser();
+		 String fileExtension = ".csv";
 		 FileWriter exportFile;
 		 fileChooser.setTitle("Choose Location to save the export");
 		 File selectedFile = null;
-		 while (selectedFile == null) {
-			 selectedFile = fileChooser.showSaveDialog(null);
-		 }
+		 selectedFile = fileChooser.showSaveDialog(null);
+		 if (selectedFile == null) return;
 		 String alreadyExtension = getFileExtension(selectedFile);
 		 		 
 		 if (isCSV(alreadyExtension)) {
@@ -78,16 +77,16 @@ public class FileExport {
 		 Statement stmt = con.createStatement();
 		 ResultSet rs = stmt.executeQuery(query);
     	 exportFile.append("Name");
-    	 exportFile.append(',');
+    	 exportFile.append('\t');
     	 exportFile.append("Beschreibung");
-    	 exportFile.append(',');
+    	 exportFile.append('\t');
     	 exportFile.append("Eingetragen am");
     	 exportFile.append('\n');
          while (rs.next()) {
              exportFile.append(rs.getString(1));
-             exportFile.append(',');
+             exportFile.append('\t');
              exportFile.append(rs.getString(2));
-             exportFile.append(',');
+             exportFile.append('\t');
              exportFile.append(rs.getString(3));
              exportFile.append('\n');
             }
