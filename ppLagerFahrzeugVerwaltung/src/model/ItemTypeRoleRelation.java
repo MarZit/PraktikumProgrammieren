@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 /**
  * The persistent class for the item_type_role_relation database table.
- * 
+ * @author Anja Skowasch, Julian Unsleber, Marcus Zitzelsberger, Markus Exner
  */
 @Entity
 @Table(name="item_type_role_relation")

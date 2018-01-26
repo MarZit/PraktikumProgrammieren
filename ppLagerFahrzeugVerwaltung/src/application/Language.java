@@ -1,6 +1,6 @@
 package application;
 
-/*
+/**
  * @author Marcus Zitzelsberger 
  */
 

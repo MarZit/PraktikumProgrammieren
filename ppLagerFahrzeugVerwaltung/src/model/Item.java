@@ -1,5 +1,4 @@
 package model;
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
@@ -7,9 +6,10 @@ import java.util.Date;
 
 /**
  * The persistent class for the item database table.
- * 
+ * @author Anja Skowasch, Julian Unsleber, Marcus Zitzelsberger, Markus Exner
  */
 @Entity
+@Table(name="item")
 @NamedQuery(name="Item.findAll", query="SELECT i FROM Item i")
 public class Item implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -24,13 +24,13 @@ public class Item implements Serializable {
 	private Date entrydate;
 
 	@Column(name="item_picture")
-	private String itemPicture;
+	private String itemPicture = "";
 
 	private byte lent;
 
-	private String name;
+	private String itemName;
 
-	private byte out;
+	private byte isOut;
 
 	@Column(name="type_id")
 	private int typeId;
@@ -79,19 +79,19 @@ public class Item implements Serializable {
 	}
 
 	public String getName() {
-		return this.name;
+		return this.itemName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.itemName = name;
 	}
 
-	public byte getOut() {
-		return this.out;
+	public byte getIsOut() {
+		return this.isOut;
 	}
 
-	public void setOut(byte out) {
-		this.out = out;
+	public void setIsOut(byte out) {
+		this.isOut = out;
 	}
 
 	public int getTypeId() {

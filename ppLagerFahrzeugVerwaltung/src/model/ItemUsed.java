@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * The persistent class for the item_used database table.
- * 
+ * @author Anja Skowasch, Julian Unsleber, Marcus Zitzelsberger, Markus Exner
  */
 @Entity
 @Table(name="item_used")

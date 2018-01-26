@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 /**
  * The persistent class for the item_type database table.
- * 
+ * @author Anja Skowasch, Julian Unsleber, Marcus Zitzelsberger, Markus Exner
  */
 @Entity
 @Table(name="item_type")
@@ -49,6 +49,11 @@ public class ItemType implements Serializable {
 
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getTypeName();
 	}
 
 }

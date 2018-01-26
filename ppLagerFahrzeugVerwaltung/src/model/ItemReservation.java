@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * The persistent class for the item_reservation database table.
- * 
+ * @author Anja Skowasch, Julian Unsleber, Marcus Zitzelsberger, Markus Exner
  */
 @Entity
 @Table(name="item_reservation")
@@ -37,8 +37,7 @@ public class ItemReservation implements Serializable {
 	@Column(name="user_id")
 	private int userId;
 
-	public ItemReservation() {
-	}
+	public ItemReservation() {}
 
 	public int getReservationId() {
 		return this.reservationId;

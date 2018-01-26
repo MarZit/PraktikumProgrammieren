@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="ppLagerFahrzeugVerwaltung">
+	<persistence-unit name="database" transaction-type="RESOURCE_LOCAL">
 		<class>model.Item</class>
 		<class>model.ItemReservation</class>
 		<class>model.ItemType</class>
@@ -11,12 +11,13 @@
 		<class>model.User</class>
 		<class>model.UserRole</class>
 		<properties>
-			<property name="hibernate.connection.username" value="root"/>
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/database"/>
+			<property name="hibernate.connection.username" value="myuser"/>
+			<property name="hibernate.connection.password" value="password" />
+			<property name="hibernate.connection.url" value="jdbc:mysql://85.214.197.82:3306/mydb"/>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
 			<property name="hibernate.show_sql" value="true"/>
 			<property name="hibernate.format_sql" value="true"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
 			<property name="log4j.logger.org.hibernate" value="debug"/>
 		</properties>
 	</persistence-unit>
