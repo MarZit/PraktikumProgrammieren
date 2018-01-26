@@ -2,12 +2,16 @@ package guiLager;
 
 import java.util.ArrayList;
 
+import javax.naming.spi.InitialContextFactoryBuilder;
+
 import application.Language;
 import application.Specifications;
 import application.TypeKindEnum;
 import controller.StoreController;
 import databaseLager.DatabaseCreator;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -74,6 +78,11 @@ public class ContainerPane extends BorderPane {
 		addNewItemTypeMenuItem.setVisible(this.currentUser.isAllowed());
 		MenuItem exportDatabase = new MenuItem(Specifications.getInstance().getResources().getString("export"));
 		exportDatabase.setOnAction(e -> {
+			Alert exportAlert = new Alert(AlertType.INFORMATION);
+			exportAlert.setTitle(Specifications.getInstance().getResources().getString("exportAlertTitle"));
+			exportAlert.setHeaderText(Specifications.getInstance().getResources().getString("exportAlertHeader"));
+			exportAlert.setContentText(Specifications.getInstance().getResources().getString("exportAlertInfo"));
+			exportAlert.showAndWait();
 			storeController.exportDatabase();
 		});
 		/*Datenbank mit Testdaten füllen*/
@@ -91,6 +100,7 @@ public class ContainerPane extends BorderPane {
 			NewUser newUser = new NewUser(this.storeController);
 			newUser.showAndWait();
 		});
+		fillDatabase.setVisible(this.currentUser.isAllowed());
 		databaseMenu.getItems().addAll(addNewItemMenuItem, addNewItemTypeMenuItem, exportDatabase, fillDatabase);
 //		Menu statisticsMenu = new Menu();
 //		statisticsMenu.setText(Specifications.getInstance().getResources().getString("statistics"));
