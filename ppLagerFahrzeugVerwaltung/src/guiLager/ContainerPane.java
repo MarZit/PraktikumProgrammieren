@@ -91,17 +91,33 @@ public class ContainerPane extends BorderPane {
 			DatabaseCreator db = new DatabaseCreator();
 			try {
 				db.createData();
+				initLeft();
+				initCenter();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		});
+		
+		MenuItem resetDatabase = new MenuItem(Specifications.getInstance().getResources().getString("resetDatabase"));
+		resetDatabase.setOnAction(e -> {
+			DatabaseCreator db = new DatabaseCreator();
+			try {
+				db.resetDatabase();
+				db.createSchema();
+				initLeft();
+				initCenter();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		});
+		resetDatabase.setVisible(this.currentUser.isAllowed());
 		addUser.setVisible(this.currentUser.isAllowed());
 		addUser.setOnAction(e -> {
 			NewUser newUser = new NewUser(this.storeController);
 			newUser.showAndWait();
 		});
 		fillDatabase.setVisible(this.currentUser.isAllowed());
-		databaseMenu.getItems().addAll(addNewItemMenuItem, addNewItemTypeMenuItem, exportDatabase, fillDatabase);
+		databaseMenu.getItems().addAll(addNewItemMenuItem, addNewItemTypeMenuItem, exportDatabase, resetDatabase, fillDatabase);
 //		Menu statisticsMenu = new Menu();
 //		statisticsMenu.setText(Specifications.getInstance().getResources().getString("statistics"));
 		topMenuBar.getMenus().addAll(userMenu, databaseMenu);
