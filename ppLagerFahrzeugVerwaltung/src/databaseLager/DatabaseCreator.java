@@ -23,8 +23,7 @@ public class DatabaseCreator {
 	if (connection == null) {
 	    Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
 	    DriverManager.registerDriver(driver);
-	    connection = DriverManager.getConnection("jdbc:mysql://85.214.197.82:3306/"  + "?useSSL=true", "myuser", "password");  
-	    
+	    connection = DriverManager.getConnection("jdbc:mysql://85.214.197.82:3306/"  + "?useSSL=true", "myuser", "password");	    
 	}
 	
 	return connection;
@@ -108,4 +107,28 @@ public class DatabaseCreator {
     	
     	return sql.split("[;]");
         }
+    
+    /** Clean database **/
+    private String[] getResetDatabase() throws IOException {
+    	InputStream in = getClass().getResourceAsStream("SQL-Reset.sql");
+    	BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    	String line, sql = "";
+    	while((line = br.readLine()) != null) {
+    	    sql += line + "\n";
+    	}
+    	br.close();
+    	
+    	return sql.split("[;]");
+    }
+    
+    public void resetDatabase() throws Exception {
+    	Statement stmt = getConnection("mydb").createStatement();
+    	for(String sql: getResetDatabase()){
+    	    System.out.println(sql);
+    	    stmt.execute(sql);
+    	}
+    	stmt.close();
+    	connection = null;
+    	
+    }
 }
